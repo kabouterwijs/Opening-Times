@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.compare 'compare/:a/:b', :controller => 'compare', :defaults => { :a => nil, :b => nil }
 
-  ABOUT_PAGES = %w(about accessibility advertising bankholidays copyright feedback guidelines harness help license multipleopenings privacy recentchanges recentlyremoved register sitemap sitemapindex statistics)
+  ABOUT_PAGES = %w(about accessibility advertising bankholidays copyright feedback guidelines harness help license multipleopenings privacy recentchanges recentlyremoved register sitemap sitemapindex statistics welcome)
   
   ABOUT_PAGES.each do |a|
     map.send "#{a}", "#{a}", :controller => 'about', :action => a
