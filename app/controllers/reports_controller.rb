@@ -109,7 +109,7 @@ class ReportsController < ApplicationController
     
     all_conditions = conditions.join(' AND ')
     
-    @openings = Opening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :order => '(closes_mins - opens_mins) DESC', :page => params[:page])
+    @openings = Opening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :order => '(closes_mins - opens_mins) DESC, opens_mins', :page => params[:page])
   end
 
   def outside_uk
