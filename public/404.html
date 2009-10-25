@@ -20,24 +20,17 @@
   <div class="dialog">
     <img src="/images/404.png" alt="Error 404 o'clock" height="193" width="192" />
     <h1>Page not found</h1>
-    <p>You may have mistyped the address or the page may have moved or been deleted.</p>
-    <p>Return to <a href="/">Opening Times home page</a>.</p>
+    <p>Sorry, the page could not be found, please try searching for the location you require</p>
+
+    <form action="/search" method="get">
+      <label for='location' accesskey='4' title = "Enter a town, city, postcode, or lat/long">Location</label>
+      <input type="text" name="location" size="" />
+      <input type="submit" value="Search" class='button' />
+    </form>
+
+    <p>or return to <a href="/">Opening Times home page</a>.</p>
     <p><small>Error 404</small></p>
 
-        <style type="text/css">
-          #goog-wm { }
-          #goog-wm h3.closest-match { }
-          #goog-wm h3.closest-match a { }
-          #goog-wm h3.other-things { }
-          #goog-wm ul li { }
-          #goog-wm li.search-goog { display: block; }
-        </style>
-        <script type="text/javascript">
-          var GOOG_FIXURL_LANG = 'en_GB';
-          var GOOG_FIXURL_SITE = 'http://opening-times.co.uk/';
-        </script>
-
-        <script type="text/javascript" src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
 
 
 
