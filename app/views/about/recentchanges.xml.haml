@@ -3,16 +3,16 @@
   %id= recentchanges_url
   %link{ :href => recentchanges_url(:format => "xml"), :rel => "self" }
   %title{ :type => "text" }= "Opening Times recent changes"
-  %updated= @revisions.first.created_at.iso8601
+  %updated= @facilities.first.created_at.iso8601
 
-  - @revisions.each do |r|
+  - @facilities.each do |f|
     %entry
-      %id= facility_url(r.facility_id)
-      %title{ :type => "text" }= "User: #{r.user_id}, size: #{r.length}"
-      %link{ :rel => "alternate", :href => facility_revision_url(r.facility_id, r) }
+      %id= facility_url(f)
+      %title{ :type => "text" }= f.full_name
+      %link{ :rel => "alternate", :href => facility_slug_url(f.slug) }
       %author
-        %name= "User ID: #{h(r.user_id)}"
-        %uri= user_url(r.user_id)
-      %updated= r.created_at.iso8601
-      %summary=h r.comment
+        %name= "User ID: #{h(f.user_id)}"
+        %uri= user_url(f.user_id)
+      %updated= f.created_at.iso8601
+      %summary=h f.comment
 

@@ -13,10 +13,13 @@ class AboutController < ApplicationController
   end
 
   def recentchanges
-    @revisions = FacilityRevision.find(:all, :order => 'id DESC', :limit => 100)
     respond_to do |format|
-      format.html
-      format.xml
+      format.html {
+        @revisions = FacilityRevision.find(:all, :order => 'id DESC', :limit => 100)
+      }
+      format.xml {
+        @facilities = Facility.find(:all, :order => 'updated_at DESC', :limit => 100)
+      }
       format.rss { redirect_to :format => :xml }
     end
   end
