@@ -8,11 +8,13 @@
   - @facilities.each do |f|
     %entry
       %id= facility_url(f)
-      %title{ :type => "text" }= f.full_name
+      %title{ :type => "text" }= h f.full_name
       %link{ :rel => "alternate", :href => facility_slug_url(f.slug) }
       %author
         %name= "User ID: #{h(f.user_id)}"
         %uri= user_url(f.user_id)
       %updated= f.created_at.iso8601
-      %summary=h f.comment
+      %summary
+        = f.revision == 1 ? 'New entry' : 'Updated entry'
+        =h f.comment
 
