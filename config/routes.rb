@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :groups, :collection => { :sitemap => :get }
+  map.connect 'groups/:id/:page', :controller => :groups, :action => :show, :defaults => { :page => 1 }, :requirements => { :page => /\d*/ } # To allow page caching
 
   map.search 'search.:format', :controller => 'search', :defaults => { :format => nil }
 #  map.fireeagle 'search/fireeagle', :controller => 'search', :action => 'fireeagle'
@@ -31,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     map.send "#{a}", "#{a}.:format", :controller => 'about', :action => a
   end
   
-  map.connect 'services/:id', :controller => 'facilities', :action => 'show'
+  map.connect 'services/:id', :controller => 'facilities', :action => 'show' # redirect old urls
 
   map.reports 'reports/:action/:ip', :controller => 'reports', :defaults => { :ip => nil }, :ip => /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/
 
