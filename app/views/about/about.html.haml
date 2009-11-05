@@ -1,22 +1,17 @@
 %h1= @page_title = "About Opening Times"
 
-%p
-  Opening Times is a personal project created in my spare time.
-  My aim is to provide comprehensive, accurate opening times information for facilities such as shops, restaurants, libraries and such like in the UK. The <a href="/copyright">source code and data are both available under an open license</a>.
+%p Opening Times provides opening times information for facilities such as shops, restaurants, libraries in the UK.
 
-%p
-  Currently the website is under testing so there may be errors, bugs, incorrect or missing information.
-  I am really keen to hear feedback from any users, so please
-  = link_to( "get in touch", feedback_path) + '.'
+%h3 Open licensing
 
-%h2 Thanks
+%p The source code and data are both available under an open license.
 
-%p Thanks to Laura, my parents and all my friends and colleagues for all the help and advice.
+%ul
+  %li
+    = link_to 'Opening Times source code', 'http://github.com/aubergene/Opening-Times'
+    (Ruby on Rails)
 
-%h3 Open Source software used
-
-%p
-  Thanks to the following open source projects which were used to help build Opening Times
+%p The following open source projects which were used to help build Opening Times:
 
 %ul
   %li= link_to 'Ruby', 'http://www.ruby-lang.org'
@@ -25,15 +20,11 @@
   %li= link_to 'GNU', 'http://www.gnu.org'
   %li= link_to 'Ubuntu', 'http://www.ubuntu.com'
   %li= link_to 'Git', 'http://git.or.cz'
-  %li= link_to 'Thin', 'http://code.macournoyer.com/thin/'
-  %li= link_to 'Nginx', 'http://nginx.net'
   %li= link_to 'Apache', 'http://www.apache.org/'
   %li= link_to 'Phusion Passenger', 'http://www.modrails.com/'
   %li= link_to 'Firefox', 'http://www.mozilla.com/firefox'
-  %li= link_to 'Firefox HTML validator', 'http://users.skynet.be/mgueury/mozilla'
   %li= link_to 'Inkscape', 'http://www.inkscape.org/'
   %li
     = link_to "FAMFAMFAM", 'http://www.famfamfam.com/lab/icons/silk/'
     (Creative Commons icons)
-  %li Any other projects I've forgotten, let me know if you want a link
 
