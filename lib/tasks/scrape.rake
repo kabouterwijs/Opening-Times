@@ -1,24 +1,15 @@
-
 namespace :scrape do
 
-  task(:farmfoods => [:environment]) do
-    require '../scrapers/lib/scraper/farmfoods_scraper.rb'
-    FarmfoodsScraper.new
-  end
-
-  task(:postoffice => [:environment]) do
-    require '../scrapers/lib/scraper/post_office_scraper.rb'
-    PostOfficeScraper.new
-  end
-
-  task(:tesco => [:environment]) do
-    require '../scrapers/lib/scraper/tesco_scraper.rb'
-    TescoScraper.new
-  end
-
-  task(:waitrose => [:environment]) do
-    require '../scrapers/lib/scraper/waitrose_scraper.rb'
-    WaitroseScraper.new
+  task(:data => [:environment]) do
+    facility_name = ENV['facility']
+    if facility_name.blank?
+      puts "Please specify which facility you wish to scrape"
+      Process.exit
+    end
+    puts "Scraping #{facility_name.titlecase}"
+    require "../scrapers/lib/scraper/#{facility_name.downcase}_scraper.rb"
+    Module.const_get("#{facility_name}Scraper").new
   end
 
 end
+
