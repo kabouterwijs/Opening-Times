@@ -19,6 +19,7 @@ describe "slugify" do
   it "should turn & into 'and'" do
     "Fox & Sons".slugify.should == "fox-and-sons"
     "Lennon & McCartney".slugify.should == "lennon-and-mccartney"
+    "M&S".slugify.should == "m-and-s"
   end
 
   it "should remove anything which causes hyphens at begining or end" do
