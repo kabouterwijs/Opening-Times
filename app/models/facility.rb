@@ -25,7 +25,7 @@ class Facility < ActiveRecord::Base
 
     need_tidy = %w(name location description address phone url)
     need_tidy.each do |x|
-      self.attributes[x].strip! if attributes[x]
+      self.attributes[x] = self.attributes[x].tidy_text if attributes[x]
     end
     self.postcode.upcase! if postcode
     self.address.gsub!(/\s*,?\s*[\n\r]{1,2}/,", ") if address # turn line breaks in to comma separated address
