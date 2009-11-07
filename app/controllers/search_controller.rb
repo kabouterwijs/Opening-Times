@@ -19,7 +19,7 @@ class SearchController < ApplicationController
   def index
     @location = params[:location]
     @group = params[:group]
-    
+
     if @location.blank? && !@group.blank?
       search_groups
     elsif @location.blank? && @group.blank?
@@ -35,8 +35,10 @@ class SearchController < ApplicationController
     unless @group.blank?
       search_groups
       return unless @filter_group
-    end  
-    
+    end
+
+    render 'no_results' and return if @location.blank?
+
     l_lat, l_lng = extract_lat_lng(@location)
     logger.info "lat=#{l_lat}, lng=#{l_lng}"
     if l_lat && l_lng
@@ -44,26 +46,29 @@ class SearchController < ApplicationController
     else
       logger.info "geocoding"
       @location = MultiGeocoder.geocode(@location + ", UK")
+      render 'no_results' and return unless @location.success
     end
 
     @distance = params[:distance].to_i
     @distance = DISTANCE_DEFAULT unless DISTANCES.include?(@distance)
 
     if @filter_group
-      @facilities = Facility.paginate(:all, :origin => @location, :within => @distance, :conditions=>["id IN (SELECT facility_id FROM group_memberships WHERE group_id = ?)", @filter_group.id], :order => 'distance', :page => params[:page], :per_page => RESULTS_PER_PAGE)    
+      @facilities = Facility.paginate(:all, :origin => @location, :within => @distance, :conditions=>["id IN (SELECT facility_id FROM group_memberships WHERE group_id = ?)", @filter_group.id], :order => 'distance', :page => params[:page], :per_page => RESULTS_PER_PAGE)
     else
       @facilities = Facility.paginate(:all, :origin => @location, :within => @distance, :order => 'distance', :page => params[:page], :per_page => RESULTS_PER_PAGE)
     end
 
     @status_manager = StatusManager.new
 
+    render 'no_results' and return if @facilities.empty?
+
     respond_to do |format|
-      format.html { render @facilities.empty? ? 'no_results' : 'index' }
+      format.html
       format.xml
       format.json { render :json => @facilities.to_json( :only => [:id,:slug,:name,:location,:address,:postcode,:lat,:lng]), :methods => [:to_param]  }
     end
   end
-  
+
   def search_groups
     if @filter_group = Group.find_by_slug(@group.slugify)
       if @location.blank?
@@ -77,7 +82,7 @@ class SearchController < ApplicationController
       render :template => "search/choose_group", :status => 404 and return
     end
   end
-  
+
 #  def find_filter_group
 #    unless @filter_group = Group.find_by_slug(@group.slugify)
 #      @matches = Group.find_by_sql(["SELECT name, slug FROM groups WHERE slug SOUNDS LIKE ?", @group.slugify])
@@ -86,3 +91,4 @@ class SearchController < ApplicationController
 #  end
 
 end
+
