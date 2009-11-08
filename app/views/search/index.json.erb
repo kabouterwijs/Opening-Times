@@ -1,17 +1,16 @@
-{"results":
-  [
-  <% @facilities.each do |f| -%>
-    {"result":
-      "id": <%= f.id %>
-      "url": <%= facility_url(f) %>
-      "status": <%= @status_manager.status(f) %>
-      "name": <%=h f.name %>
-      "location": <%=h f.location %>
-      "address": <%=h f.address %>
-      "postcode": <%=h f.postcode %>
-      "lat": <%= f.lat %>
-      "lng": <%= f.lng %>
+[
+<% @facilities.each do |f| -%>
+  {"facility": {
+    "id": <%= f.id %>,
+    "url": <%= facility_url(f).to_json %>,
+    "status": <%= @status_manager.status(f).to_json %>,
+    "name": <%= f.name.to_json %>,
+    "location": <%= f.location.to_json %>,
+    "address": <%= f.address.to_json %>,
+    "postcode": <%= f.postcode.to_json %>,
+    "lat": <%= f.lat %>,
+    "lng": <%= f.lng %>
     }
-  <% end -%>
-  ]
-}
+  },
+<% end -%>
+]

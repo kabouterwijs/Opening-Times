@@ -60,7 +60,7 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.html { render @facilities.empty? ? 'no_results' : 'index' }
       format.xml
-      format.json { render :json => @facilities.to_json( :only => [:id,:slug,:name,:location,:address,:postcode,:lat,:lng]), :methods => [:to_param]  }
+      format.json
     end
   end
   
