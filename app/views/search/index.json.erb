@@ -8,8 +8,11 @@
     "location": <%= f.location.to_json %>,
     "address": <%= f.address.to_json %>,
     "postcode": <%= f.postcode.to_json %>,
+    "phone": <%= f.phone.to_json %>,
+    "homepage": <%= f.url.to_json%>, 
     "lat": <%= f.lat %>,
-    "lng": <%= f.lng %>
+    "lng": <%= f.lng %>,
+    "normal_openings": <%= f.normal_openings.to_json :only => [:closes_mins, :opens_mins, :sequence, ]%>
     }
   },
 <% end -%>
