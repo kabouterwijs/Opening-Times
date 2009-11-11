@@ -1,6 +1,6 @@
 !!!
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
-  %head
+  %head{ :profile => @profile }
     %title= @page_title ? h(@page_title) + ' - Opening Times' : 'Opening Times'
     %link{ :rel=>"icon", :href=> "http://#{request.host_with_port}/favicon.png", :type=>"image/x-icon" }
     %meta{ 'http-equiv'=>"content-type", :content=>"text/html;charset=UTF-8" }
@@ -32,7 +32,7 @@
             - flash.each do |name, msg|
               .flash
                 = content_tag :div, msg, :class => "flash-#{name}"
-              
+
         = yield :top_content
 
         .grid_16
