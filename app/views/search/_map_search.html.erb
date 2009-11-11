@@ -8,8 +8,8 @@ function fitMap( map, points ) {
    for (var i=0; i< points.length; i++) {
       bounds.extend(points[i]);
    }
-   map.setZoom(map.getBoundsZoomLevel(bounds));
-//   map.setCenter(bounds.getCenter());
+   map.setZoom(map.getBoundsZoomLevel(bounds)-1);
+   map.setCenter(bounds.getCenter());
 }
 
 function initialize() {
@@ -32,7 +32,7 @@ function initialize() {
     locationIcon.iconSize = new GSize(39, 34);
     locationIcon.shadowSize = new GSize(39, 34);
     locationIcon.iconAnchor = new GPoint(9, 34);
-    
+
     var zoomMarkers = new Array();
     zoomMarkers[0] = latlng;
 
