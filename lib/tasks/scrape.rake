@@ -2,13 +2,15 @@ namespace :scrape do
 
   task(:data => [:environment]) do
     facility_name = ENV['facility']
-    if facility_name.blank?
-      puts "Please specify which facility you wish to scrape"
+    file_name = "../scrapers/lib/scraper/#{facility_name.downcase}_scraper.rb"
+    if facility_name.blank? || !File.exists?(file_name)
+      puts "Please specify which facility you wish to scrape\n#{file_name} not found"
       Process.exit
     end
-    puts "Scraping #{facility_name.titlecase}"
-    require "../scrapers/lib/scraper/#{facility_name.downcase}_scraper.rb"
-    Module.const_get("#{facility_name}Scraper").new
+    require file_name
+    class_name = facility_name.titlecase.gsub('-','')
+    puts "Scraping #{class_name}"
+    Module.const_get("#{class_name}Scraper").new
   end
 
 end
