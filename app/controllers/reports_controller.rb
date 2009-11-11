@@ -8,17 +8,17 @@ class ReportsController < ApplicationController
   def filter
     conditions = []
     arguments = {}
-    
+
     unless (@min_opens_at = params[:min_opens_at]).blank?
       conditions << "opens_mins >= :min_opens_at"
       arguments[:min_opens_at] = time_to_mins(@min_opens_at)
     end
-    
+
     unless params[:max_opens_at].blank?
       conditions << "opens_mins <= :max_opens_at"
       arguments[:max_opens_at] = time_to_mins(params[:max_opens_at])
     end
-    
+
     all_conditions = conditions.join(' AND ')
     @woo = [all_conditions, arguments].inspect
 
@@ -33,33 +33,33 @@ class ReportsController < ApplicationController
     conditions = []
     arguments = {}
 
-    @end = params[:end] 
+    @end = params[:end]
     case @end
       when "opens"
         conditions << "opens_mins = 720"
       when "closes"
-        conditions << "closes_mins = 720"      
+        conditions << "closes_mins = 720"
       else
         conditions << "opens_mins = 720 OR closes_mins = 720"
     end
 
-    @week_day = params[:week_day] 
+    @week_day = params[:week_day]
     unless @week_day.blank?
       @week_day = @week_day.to_i
       conditions << "sequence = :sequence"
       arguments[:sequence] = @week_day
     end
-    
+
     all_conditions = conditions.join(' AND ')
-  
-    @openings = NormalOpening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :page => params[:page])
+
+    @openings = NormalOpening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :page => params[:page], :order => 'updated_at DESC')
   end
 
   def midnight
     conditions = []
     arguments = {}
 
-    @end = params[:end] 
+    @end = params[:end]
     case @end
       when "opens"
         conditions << "opens_mins = 0"
@@ -69,16 +69,16 @@ class ReportsController < ApplicationController
         conditions << "opens_mins = 0 OR closes_mins = 1440"
     end
 
-    @week_day = params[:week_day] 
+    @week_day = params[:week_day]
     unless @week_day.blank?
       @week_day = @week_day.to_i
       conditions << "sequence = :sequence"
       arguments[:sequence] = @week_day
     end
-    
+
     all_conditions = conditions.join(' AND ')
-  
-    @openings = NormalOpening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :page => params[:page])
+
+    @openings = NormalOpening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :page => params[:page], :order => 'updated_at DESC')
   end
 
   def openings_count
@@ -89,7 +89,7 @@ class ReportsController < ApplicationController
   end
 
   def openings_length
-    @min = params[:min] 
+    @min = params[:min]
     @min = @min ? @min.to_i : 0
     @max = params[:max]
     @max = @max ? @max.to_i : 24 * 60
@@ -99,26 +99,26 @@ class ReportsController < ApplicationController
     arguments = {}
     arguments[:min] = @min
     arguments[:max] = @max
-       
-    @week_day = params[:week_day] 
+
+    @week_day = params[:week_day]
     unless @week_day.blank?
       @week_day = @week_day.to_i
       conditions << "sequence = :sequence"
       arguments[:sequence] = @week_day
     end
-    
+
     all_conditions = conditions.join(' AND ')
-    
+
     @openings = Opening.paginate(:all, :include => :facility, :conditions => [all_conditions, arguments], :order => '(closes_mins - opens_mins) DESC, opens_mins', :page => params[:page])
   end
 
   def outside_uk
     # very rough bounding box for UK including NI
-    @min_lat = 49.6 
+    @min_lat = 49.6
     @max_lat = 60.93
     @min_lng = -8.28
     @max_lng = 2.15
-    
+
     @status_manager = StatusManager.new
     @facilities = Facility.paginate(:all, :conditions => ["lat < ? OR lat > ? OR lng < ? OR lng > ?", @min_lat, @max_lat, @min_lng, @max_lng], :order => 'updated_at DESC', :page => params[:page])
   end
@@ -146,7 +146,7 @@ class ReportsController < ApplicationController
 #    @openings = Opening.find(:all, :conditions=>"IF(closes_mins=0,1440,closes_mins)-opens_mins < #{@min_length} or IF(closes_mins=0,1440,closes_mins)-opens_mins < #{@max_length}", :order => "IF(closes_mins=0,1440,closes_mins)-opens_mins")
 #  end
 
-#  
+#
 #  def group_memberships
 #    @groups = Group.find_by_sql("SELECT count(service_id) AS num_members, groups.slug, groups.name FROM groups LEFT JOIN group_memberships ON groups.id = group_id GROUP BY groups.id ORDER BY num_members")
 
@@ -154,10 +154,11 @@ class ReportsController < ApplicationController
 
 
   private
-  
+
   def set_limit
     @limit = params[:limit].to_i
     @limit = DEFAULT_LIMIT if @limit > MAX_LIMIT || @limit == 0
   end
 
 end
+
