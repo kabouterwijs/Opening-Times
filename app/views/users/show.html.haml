@@ -26,7 +26,10 @@
       %td= link_to r.facility_id, r.facility
       %td=h r.slug
       %td= r.revision
-      %td= link_to r.created_at.strftime("%I:%M, %d %B %Y"), facility_revision_path(r.facility_id, r), :title => time_ago_in_words(r.created_at) + " ago"
+      %td
+        = link_to r.created_at.strftime("%I:%M, %d %B %Y"), facility_revision_path(r.facility_id, r), :title => time_ago_in_words(r.created_at) + " ago"
+        \|
+        = link_to "history", facility_revisions_path(r.facility_id)
       %td= number_with_delimiter(r.length) + " chars"
       %td= r.ip
       %td=h r.comment

@@ -10,7 +10,7 @@ class Facility < ActiveRecord::Base
   has_many :facility_revisions
   belongs_to :user
   belongs_to :holiday_set
- 
+
   has_many :group_memberships, :dependent => :destroy
   has_many :groups, :through => :group_memberships
   attr_accessible :name, :location, :description, :lat, :lng, :address, :postcode, :phone, :url, :holiday_set_id, :normal_openings_attributes, :holiday_openings_attributes, :comment, :retired, :groups_list
@@ -31,7 +31,7 @@ class Facility < ActiveRecord::Base
     self.address.gsub!(/\s*,?\s*[\n\r]{1,2}/,", ") if address # turn line breaks in to comma separated address
   end
 
-  validates_presence_of :name, :location, :slug, :address, :revision, :user_id, :updated_from_ip, :holiday_set_id
+  validates_presence_of :name, :location, :slug, :address, :revision, :updated_from_ip, :holiday_set_id
   validates_format_of :postcode, :with => POSTCODE_REGX
 
   validates_presence_of :comment, :if => :retired?, :message => "must be provided if facility is marked for removal"
@@ -51,7 +51,7 @@ class Facility < ActiveRecord::Base
     self.postcode = extract_postcode(postcode) # Uppercase, tidy spaces etc
     update_summary_normal_openings
     self.url = "http://" + url unless url.blank? || url =~ /\Ahttps?:\/\//
-  end  
+  end
 
   def before_create
     self.revision = 1
@@ -175,7 +175,7 @@ class Facility < ActiveRecord::Base
 
 
   def from_xml(xml)
-    Facility.transaction do 
+    Facility.transaction do
       unless new_record?
         self.normal_openings.each do |o|
           o.mark_for_destruction
@@ -228,7 +228,7 @@ class Facility < ActiveRecord::Base
 
   def groups_list=(s)
     self.group_memberships.delete_all
-    
+
     groups = s.split(",")
     groups.reject!(&:blank?)
     groups.map!(&:strip)
@@ -237,7 +237,7 @@ class Facility < ActiveRecord::Base
     groups.each do |group|
       group = Group.find_or_create_by_name(group)
       self.group_memberships.build(:group => group)
-    end    
+    end
   end
 
 

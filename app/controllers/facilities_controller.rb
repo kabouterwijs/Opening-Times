@@ -1,7 +1,7 @@
 class FacilitiesController < ApplicationController
-  before_filter :require_user, :except => [:index, :show, :sitemap]
-  before_filter :check_lockdown, :except => [:index, :show, :sitemap]
-  before_filter :check_user, :except => [:index, :show, :sitemap]
+#  before_filter :require_user, :except => [:index, :show, :sitemap]
+#  before_filter :check_lockdown, :except => [:index, :show, :sitemap]
+#  before_filter :check_user, :except => [:index, :show, :sitemap]
   before_filter :redirect_id_to_slug, :only => [:show]
 
   def index
@@ -95,7 +95,7 @@ class FacilitiesController < ApplicationController
 
     def redirect_id_to_slug
       id = params[:id]
-            
+
       if !id.blank?
         if f = Facility.find_by_id(id)
           return redirect_to(facility_slug_path(f.slug))
@@ -129,7 +129,7 @@ class FacilitiesController < ApplicationController
 
     def update_user_info
       @facility.user = current_user
-      @facility.updated_from_ip = current_user.current_login_ip
+      @facility.updated_from_ip = request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip()
     end
 
 end

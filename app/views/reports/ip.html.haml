@@ -1,5 +1,5 @@
 .reportsList
-  = render 'reports/report_list'    
+  = render 'reports/report_list'
 
 %h1= @page_title = "Changes by IP #{h(@ip)}"
 
@@ -33,7 +33,9 @@
           %td= link_to h(revision.facility.full_name), facility_slug_path(revision.slug)
           %td.num= link_to revision.revision, facility_revision_path(revision.facility_id, revision.id)
           %td.num= number_with_delimiter(revision.length)
-          %td.num= link_to revision.user_id, user_path(revision.user_id)
+          %td.num
+            - if revision.user_id
+              = link_to revision.user_id, user_path(revision.user_id)
           %td.num= link_to_unless_current revision.ip, :ip => revision.ip
           %td= time_ago_in_words(revision.created_at) + " ago"
           %td=h revision.comment
