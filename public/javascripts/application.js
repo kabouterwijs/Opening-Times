@@ -6,6 +6,21 @@ replace_ids = function(s){
 }
 
 var myrules = {
+  '.closed_checkbox': function(e){
+    el = Event.findElement(e);
+    var parts = ['_opens_at','_closes_at'];
+    opening = el.id.replace(/_closed/, '')
+    parts.each(function(s) {
+      target = opening + s;
+      if (el.checked) {
+        $(target).disable();
+        $(target).addClassName("disabled");
+      } else {
+        $(target).enable();
+        $(target).removeClassName("disabled");
+      }
+    });
+  },
   '.remove': function(e){
     el = Event.findElement(e);
     target = el.href.replace(/.*#/, '.')
@@ -15,7 +30,7 @@ var myrules = {
   '.add_nested_item': function(e){
     el = Event.findElement(e);
     template = eval(el.href.replace(/.*#/, ''))
-    $(el.rel).insert({     
+    $(el.rel).insert({
       bottom: replace_ids(template)
     });
   },
@@ -24,16 +39,16 @@ var myrules = {
     elements = el.rel.match(/(\w+)/g)
     parent = '.'+elements[0]
     child = '.'+elements[1]
-    
-    child_container = el.up(parent).down(child)    
+
+    child_container = el.up(parent).down(child)
     parent_object_id = el.up(parent).down('input').name.match(/.*\[(\d+)\]/)[1]
-    
+
     template = eval(el.href.replace(/.*#/, ''))
 
     template = template.replace(/(attributes[_\]\[]+)\d+/g, "$1"+parent_object_id)
-    
+
    // console.log(template)
-    child_container.insert({     
+    child_container.insert({
       bottom: replace_ids(template)
      });
   }
@@ -42,3 +57,4 @@ var myrules = {
 Event.observe(window, 'load', function(){
   $('container').delegate('click', myrules);
 });
+
