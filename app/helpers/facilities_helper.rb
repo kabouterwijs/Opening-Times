@@ -76,7 +76,7 @@ module FacilitiesHelper
     unless fields.object.new_record?
       out = ''
       out << fields.hidden_field(:_delete)
-      out << link_to_function("remove", "$(this).up('.#{fields.object.class.name.underscore}').hide(); $(this).previous().value = '1'")
+      out << link_to_function("remove", "$(this).up('.#{fields.object.class.name.downcase}').hide(); $(this).previous().value = '1'")
       out
     end
   end
@@ -104,7 +104,7 @@ $('holidayOpenings').insert({ bottom: "#{ escape_javascript holiday_opening }".r
   def generate_html(form_builder, method, options = {})
     options[:object] ||= form_builder.object.class.reflect_on_association(method).klass.new
     options[:partial] ||= method.to_s.singularize
-    options[:form_builder_local] ||= :f  
+    options[:form_builder_local] ||= :f
 
     form_builder.fields_for(method, options[:object], :child_index => 'NEW_RECORD') do |f|
       render(:partial => options[:partial], :locals => { options[:form_builder_local] => f })
