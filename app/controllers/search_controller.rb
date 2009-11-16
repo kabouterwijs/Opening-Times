@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   include Geokit::Geocoders
+  include Geokit::Mappable
   include ParserUtils
 
   DISTANCES = [1, 2, 5, 10, 15, 20, 50]
@@ -20,16 +21,35 @@ class SearchController < ApplicationController
     @location = params[:location]
     @group = params[:group]
 
-    if @location.blank? && !@group.blank?
-      search_groups
-    elsif @location.blank? && @group.blank?
-      render 'no_results' and return
-    else
-      search
+    respond_to do |format|
+      format.html do
+        if @location.blank? && !@group.blank?
+          search_groups
+        elsif @location.blank? && @group.blank?
+          render 'no_results' and return
+        else
+          search
+        end
+      end
+      format.kml do
+        kml
+      end
     end
   end
 
   private
+
+  def kml
+    bounds = params["BBOX"].to_s.split(",")
+    if 4 == bounds.size
+      sw = GeoKit::LatLng.new(bounds[1],bounds[0])
+      ne = GeoKit::LatLng.new(bounds[3],bounds[2])
+      bounds = GeoKit::Bounds.new(sw,ne)
+      @facilities = Facility.find(:all, :bounds => bounds, :limit => 20)
+    else
+      @facilities = []
+    end
+  end
 
   def search
     unless @group.blank?
@@ -65,7 +85,7 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.html
       format.xml
-      format.json { render :json => @facilities.to_json( :only => [:id,:slug,:name,:location,:address,:postcode,:lat,:lng]), :methods => [:to_param]  }
+      format.json
     end
   end
 
