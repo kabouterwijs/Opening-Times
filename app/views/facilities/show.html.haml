@@ -76,7 +76,7 @@
               %abbr.tel{ :title => h(@facility.phone.gsub(/\D/,'')) }= h(@facility.phone)
           - unless @facility.url.blank?
             %li
-              = link_to("Official website", @facility.url, :class => :url)
+              = link_to("Official website", @facility.url, :class => :url, :rel => 'nofollow')
       .geo
         %span.latitude= @facility.lat
         %span.longitude= @facility.lng
