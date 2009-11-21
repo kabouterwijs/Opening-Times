@@ -1,8 +1,33 @@
 require 'progressbar'
+require 'csv'
 
 namespace :export do
 
+  task(:all => [:mysql, :csv, :xml])
+
   task(:xml => [:environment]) do
+    file_path = "#{RAILS_ROOT}/public/export/facilities.xml"
+    progress = ProgressBar.new("Exporting XML", Facility.count)
+
+    out = ""
+
+    File.open(file_path,"w") do |file|
+      xml = Builder::XmlMarkup.new(:indent => 2, :target => file)
+      xml.instruct!
+      xml.comment! "The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
+
+      xml.facilities do
+        Facility.find(:all, :include => [ :normal_openings, :holiday_openings, :groups]).each do |facility|
+          facility.to_xml(:builder => xml, :skip_instruct => true)
+          progress.inc
+        end
+      end
+    end
+   `gzip -f -c -9 #{file_path} > #{file_path}.gz`
+    progress.finish
+  end
+
+  task(:xml_files => [:environment]) do
     facilities = Facility.all
 
     if facilities.empty?
@@ -15,7 +40,7 @@ namespace :export do
 
     progress = ProgressBar.new("Exporting", facilities.size)
     facilities.each do |facility|
-      File.open("export/#{facility.slug}.xml", "w") do |file|
+      File.open("#{facility.slug}.xml", "w") do |file|
         progress.inc
         file << facility.to_xml
       end
@@ -24,33 +49,72 @@ namespace :export do
   end
 
   task(:csv => :environment) do
-    require 'fastercsv'
-    FasterCSV.open("export/facilities.csv","w") do |csv|
-      csv << ["name","address","postcode","phone","Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-      Facility.find(:all).each do |facility|
+    file_path = "#{RAILS_ROOT}/public/export/facilities.csv"
+    progress = ProgressBar.new("Exporting CSV", Facility.count)
 
-# "name LIKE 'ASDA %' OR name LIKE 'Morrisons %' OR name LIKE 'Sainsbury''s %' OR name LIKE 'Tesco %' OR name LIKE 'Waitose %' OR name LIKE 'B&Q %'"
-#        ASDA's, Morrisons, Sainsbury's, Tescos, Waitrose and B&Q'
+    CSV.open(file_path,"w") do |csv|
+      csv << ["The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "]
+
+      csv << ["id","name","location","address","postcode","latitude","longitude","phone","url","tags","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Bank Holidays"]
+      Facility.find(:all, :include => [ :normal_openings, :holiday_openings, :groups]).each do |facility|
 
         counter = 0
         data = []
-        data << facility.full_name
+        data << facility.id
+        data << facility.name
+        data << facility.location
         data << facility.address
         data << facility.postcode
+        data << facility.lat
+        data << facility.lng
         data << facility.phone
+        data << facility.url
+        data << facility.groups_list
+
         [1,2,3,4,5,6,0].each do |day| # Each day of the week
-          opening = facility.normal_openings[counter]
           day_data = []
-          while opening && opening.wday == day # if the opening is for this day
-            counter += 1
-            day_data << opening.summary
-            opening = facility.normal_openings[counter]
+          facility.normal_openings.sort.each do |opening|
+            if opening.wday == day # if the opening is for this day
+              counter += 1
+              day = opening.summary
+              day += "; #{opening.comment}" unless opening.comment.blank?
+              day_data << day
+              opening = facility.normal_openings[counter]
+            end
           end
+          day_data << "Closed" if day_data.empty?
           data << day_data.join("\r\n")
         end
+
+        holiday_data = []
+        facility.holiday_openings.each do |holiday_opening|
+          holiday_data << holiday_opening.summary
+        end
+        data << holiday_data.join("\r\n")
+
         csv << data
+        progress.inc
       end
     end
+    `gzip -f -c -9 #{file_path} > #{file_path}.gz`
+    progress.finish
+  end
+
+  desc "MySqlDump all tables except user"
+  task(:mysql => :environment) do
+    file_path = "#{RAILS_ROOT}/public/export/facilities.sql"
+    File.open(file_path,"w") do |f|
+      f << "-- The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
+    end
+
+    database, user, password = retrieve_db_info
+
+    cmd = "/usr/bin/env mysqldump --opt --skip-add-locks -u#{user} --ignore-table=#{database}.users "
+    puts cmd + "... [password filtered]"
+    cmd += " -p'#{password}' " unless password.nil?
+    cmd += " #{database} >> #{file_path}"
+    result = system(cmd)
+    `gzip -f -c -9 #{file_path} > #{file_path}.gz`
   end
 
 end

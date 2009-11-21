@@ -60,7 +60,7 @@ class Opening < ActiveRecord::Base
     time = parse_time(time, meridian) unless time.is_a?(Time) || time.is_a?(Date)
     self.closes_mins = time_to_mins(time)
   end
-  
+
   def closes_mins=(n_mins)
     n_mins = MINUTES_IN_DAY if n_mins == 0
     write_attribute(:closes_mins, n_mins)

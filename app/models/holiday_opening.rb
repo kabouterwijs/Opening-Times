@@ -21,15 +21,32 @@ class HolidayOpening < Opening
     super
   end
 
+  def blank?
+    closed.blank? && opens_mins.blank? && closes_mins.blank? && comment.blank?
+  end
+
+  def ==(holiday_opening)
+    holiday_opening.is_a?(HolidayOpening) && self.equal_mins?(opening)
+  end
+
+  def <=>(other)
+    self.opens_mins <=> other.opens_mins
+  end
+
   def closed=(state)
     if state
       self.opens_mins = self.closes_mins = nil
     end
-    write_attribute(:closed, state)    
+    write_attribute(:closed, state)
   end
 
   def blank?
     !closed && opens_mins.blank? && closes_mins.blank? && comment.blank?
+  end
+
+  def summary
+    return "Closed" if closed?
+    super
   end
 
   def to_xml(options = {})
@@ -52,7 +69,7 @@ class HolidayOpening < Opening
       xml = (xml/"opening")
     end
     unless self.closed = xml["closed"] =~ /true/
-      self.opens_mins  = time_to_mins(Time.parse(xml["opens"])) # no AM/PM hints, just 24 hour 
+      self.opens_mins  = time_to_mins(Time.parse(xml["opens"])) # no AM/PM hints, just 24 hour
       self.closes_mins = time_to_mins(Time.parse(xml["closes"]))
     end
     self.comment   = xml["comment"]
