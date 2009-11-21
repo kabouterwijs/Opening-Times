@@ -45,20 +45,13 @@ class FacilitiesController < ApplicationController
     @facility = Facility.new(params[:facility])
     update_user_info
 
-#    begin
-      if @facility.save
-        flash[:success] = 'Business was successfully created.'
-        redirect_to(@facility)
-      else
-        build_spare_openings
-        render "new"
-      end
-#    rescue
-#      # See note in Facility after_save
-#      @facility.errors.add_to_base("One or more openings overlap or you have a closed and open session on the same day.")
-#      build_spare_openings
-#      render "new"
-#    end
+    if @facility.save
+      flash[:success] = 'Business was successfully created.'
+      redirect_to(@facility)
+    else
+      build_spare_openings
+      render "new"
+    end
   end
 
   # PUT /facilities/1
