@@ -9,8 +9,6 @@ namespace :export do
     file_path = "#{RAILS_ROOT}/public/export/facilities.xml"
     progress = ProgressBar.new("Exporting XML", Facility.count)
 
-    out = ""
-
     File.open(file_path,"w") do |file|
       xml = Builder::XmlMarkup.new(:indent => 2, :target => file)
       xml.instruct!

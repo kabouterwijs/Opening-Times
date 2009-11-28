@@ -45,7 +45,7 @@ class FacilitiesController < ApplicationController
     @facility = Facility.new(params[:facility])
     update_user_info
 
-    if @facility.save
+    if verify_recaptcha(:model => @facility) && @facility.save
       flash[:success] = 'Business was successfully created.'
       redirect_to(@facility)
     else
@@ -59,7 +59,7 @@ class FacilitiesController < ApplicationController
     @facility = Facility.find(params[:id])
     update_user_info
 
-    if @facility.update_attributes(params[:facility])
+    if verify_recaptcha(:model => @facility) && @facility.update_attributes(params[:facility])
       flash[:success] = 'Business was successfully updated.'
       redirect_to(@facility)
     else

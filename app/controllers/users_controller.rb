@@ -4,8 +4,8 @@ class UsersController < ApplicationController
 
   def index
     @user_count = User.count
-    @leaderboard_new = FacilityRevision.count(:id, :group => :user_id, :conditions => 'revision = 1', :order => 'count_id DESC', :limit => 10)
-    @leaderboard_edits = FacilityRevision.count(:id, :group => :user_id, :conditions => 'revision <> 1', :order => 'count_id DESC', :limit => 10)
+    @leaderboard_new = FacilityRevision.count(:id, :group => :user_id, :conditions => 'revision = 1 AND user_id <> 0 AND user_id IS NOT NULL', :order => 'count_id DESC', :limit => 10)
+    @leaderboard_edits = FacilityRevision.count(:id, :group => :user_id, :conditions => 'revision <> 1 AND user_id <> 0 AND user_id IS NOT NULL', :order => 'count_id DESC', :limit => 10)
   end
 
   def show

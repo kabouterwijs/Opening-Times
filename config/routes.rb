@@ -16,22 +16,22 @@ ActionController::Routing::Routes.draw do |map|
   map.search 'search.:format', :controller => 'search', :defaults => { :format => nil }
 #  map.fireeagle 'search/fireeagle', :controller => 'search', :action => 'fireeagle'
 
-  map.login "login", :controller => "user_sessions", :action => "new"
-  map.logout "logout", :controller => "user_sessions", :action => "destroy"
-  map.signup "signup", :controller => "users", :action => "new"
+#  map.login "login", :controller => "user_sessions", :action => "new"
+#  map.logout "logout", :controller => "user_sessions", :action => "destroy"
+#  map.signup "signup", :controller => "users", :action => "new"
 
-  map.resources :user_sessions
-  map.resources :users
+#  map.resources :user_sessions
+#  map.resources :users
 
   map.compare 'compare/:a/:b', :controller => 'compare', :defaults => { :a => nil, :b => nil }
 
   ABOUT_PAGES = %w(about accessibility advertising bankholidays copyright feedback guidelines harness help license multipleopenings privacy recentchanges recentlyremoved register sitemap sitemapindex statistics welcome)
-  
+
   ABOUT_PAGES.each do |a|
     map.send "#{a}", "#{a}", :controller => 'about', :action => a
     map.send "#{a}", "#{a}.:format", :controller => 'about', :action => a
   end
-  
+
   map.connect 'services/:id', :controller => 'facilities', :action => 'show' # redirect old urls
 
   map.reports 'reports/:action/:ip', :controller => 'reports', :defaults => { :ip => nil }, :ip => /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/
