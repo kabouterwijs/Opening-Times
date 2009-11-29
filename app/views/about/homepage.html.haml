@@ -5,8 +5,12 @@
     function sf(){document.f.location.focus();}
 
 - content_for :top_content do
+  .container_16
+    .grid_5.push_11
+      = render 'partials/user_bar'
+    .clearfix
 
-  #homePage{ :style=>"text-align: center; padding-top: 24px;" }
+  #homePage{ :style=>"text-align: center; padding-top: 14px;" }
     :plain
       <object type="application/x-shockwave-flash" data="/images/logo.swf" width="196" height="196">
         <param name="movie" value="/images/logo.swf" />

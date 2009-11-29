@@ -16,12 +16,12 @@ ActionController::Routing::Routes.draw do |map|
   map.search 'search.:format', :controller => 'search', :defaults => { :format => nil }
 #  map.fireeagle 'search/fireeagle', :controller => 'search', :action => 'fireeagle'
 
-#  map.login "login", :controller => "user_sessions", :action => "new"
-#  map.logout "logout", :controller => "user_sessions", :action => "destroy"
-#  map.signup "signup", :controller => "users", :action => "new"
+  map.login "login", :controller => "user_sessions", :action => "new"
+  map.logout "logout", :controller => "user_sessions", :action => "destroy"
+  map.signup "signup", :controller => "users", :action => "new"
 
-#  map.resources :user_sessions
-#  map.resources :users
+  map.resources :user_sessions
+  map.resources :users
 
   map.compare 'compare/:a/:b', :controller => 'compare', :defaults => { :a => nil, :b => nil }
 

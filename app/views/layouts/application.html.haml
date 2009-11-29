@@ -9,8 +9,7 @@
     - if @no_index
       = tag(:meta, { :name=>'robots', :content => 'noindex' })
     = stylesheet_link_tag :all, :cache => true, :media => 'all'
-    - javascript_tag do
-      = yield(:jstemplates)
+    = render 'partials/google_prototype'
     = yield :head
     - if RAILS_ENV == 'development'
       %style{ :type=>'text/css' }
