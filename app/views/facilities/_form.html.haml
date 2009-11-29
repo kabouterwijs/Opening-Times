@@ -115,8 +115,9 @@
 
     %p= link_to 'Add a holiday opening', '#holidayopening', :class => "add_nested_item", :rel => "holidayopenings"
 
-  %br
-  = recaptcha_tags
+  - if !current_user
+    %br
+    = recaptcha_tags
 
   = facility_form.hidden_field :retired?
 
