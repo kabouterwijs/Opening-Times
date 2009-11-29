@@ -14,6 +14,12 @@
     %li
       Updated by:
       = link_to @facility.updated_from_ip, :controller => :reports, :action => :ip, :ip => @facility.updated_from_ip
+      - if @facility.user_id
+        \|
+        - if @facility.user_id > 0
+          = link_to "User #{@facility.user_id}", user_path(@facility.user_id)
+        - else
+          = 'imported'
     %li
       Revision:
       = link_to @facility.revision, facility_revisions_path(@facility)
@@ -29,6 +35,7 @@
         |
         = link_to 'Clone', new_facility_path(:f => @facility.id), :title => 'Create a new business based on this one'
 
-  Summary:
-  = @facility.summary_normal_openings
+  /
+    Summary:
+    = @facility.summary_normal_openings
 
