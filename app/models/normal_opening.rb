@@ -19,7 +19,7 @@ class NormalOpening < Opening
   end
 
   def ==(normal_opening)
-    normal_opening.is_a?(NormalOpening) && self.equal_mins?(opening) && same_wday?(opening.wday)
+    normal_opening.is_a?(NormalOpening) && self.equal_mins?(normal_opening) && same_wday?(normal_opening.wday)
   end
 
   def <=>(other)
