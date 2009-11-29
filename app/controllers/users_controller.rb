@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @revisions = @user.facility_revisions.paginate(:all, :order => 'id DESC', :page => params[:page])
   end
 
   def new

@@ -1,0 +1,15 @@
+%tr
+  %td.num
+    = link_to revision.facility_id, facility_path(revision.facility_id)
+  %td
+    = link_to h(revision.facility.full_name), facility_slug_path(revision.slug)
+    = '(new)' if 1 == revision.revision
+    %br
+      =h revision.comment
+  %td.num= link_to revision.revision, facility_revisions_path(revision.facility_id), :title => 'View the history for this facility'
+  %td= link_to 'diff', { :controller=>:compare, :a=>revision }, :title => 'Compare this version with the current version'
+  %td.num= number_with_delimiter(revision.length)
+  %td= link_to revision.ip, { :controller => :reports, :action => :ip, :ip => revision.ip }, :title => 'See other changes from this IP address'
+  %td
+    %span{ :title => revision.created_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(revision.created_at) + ' ago'
+
