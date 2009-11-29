@@ -1,0 +1,51 @@
+table
+  &.codediff
+    border: 1px solid #ccc
+    width: 100%
+    border-collapse: collapse
+    font-family: monospace
+    line-height: 90%
+
+    .line-num-cut
+      background: #ccc
+      border-top: 1px dashed #ccc
+      border-bottom: 1px dashed #ccc
+
+    thead
+      background: #ddd
+
+      .line-numbers
+        background: #ddd
+
+    td.code
+      padding-left: 2px
+
+    .cut-line
+      background: #eee
+      border-top: 1px dashed #aaa
+      border-bottom: 1px dashed #aaa
+
+    td
+      &.hidden del
+        display: none
+
+      &.del
+        background: #fdd
+
+      &.ins
+        background: #dfd
+
+  &.sidebyside tbody.mod
+  &.codediff td
+    &.del del, &.ins ins
+      text-decoration: none
+
+  &.sidebyside td
+    &.del del
+      background: #fbb
+
+    &.ins ins
+      background: #afa
+
+  &.codediff col.lines
+    width: 3em

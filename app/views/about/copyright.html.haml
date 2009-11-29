@@ -2,12 +2,11 @@
 %h1= @page_title
 
 %p
-  I built Opening Times in my spare time, I hope you find it useful. I've made the source and data open so that other people can benefit and build on from my work, I welcome contributions and would love to see the code being used in other languages and cultures.
+  I built Opening Times in my spare time, I hope you find it useful. I've made the source and data open so that other people can benefit and build on from my work, I welcome contributions and would love to see the code being used in other languages and cultures. Please join the <a href="http://groups.google.com/group/openingtimes">Opening Times mailing list</a>.
 
 %ul
   %li= anchor_to "Source Code License"
   %li= anchor_to "Data License"
-  %li= anchor_to "API"
   %li= anchor_to "Terms and conditions"
 
 %h2= anchor_for "Source Code License"
@@ -29,21 +28,23 @@
 %h2= anchor_for "Data License"
 
 %p
-  <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" align="right" /></a>
-
-  <span xmlns:dc="http://purl.org/dc/elements/1.1/" property="dc:title">Opening Times data</span> by is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution/Share-Alike License 3.0</a>.
+  The Opening Times data are made available under the Open Database License:
+  = link_to('http://opendatacommons.org/licenses/odbl/1.0/','http://opendatacommons.org/licenses/odbl/1.0/') + '.'
+  Any rights in individual contents of the database are licensed under the Database Contents License:
+  = link_to('http://opendatacommons.org/licenses/dbcl/1.0/','http://opendatacommons.org/licenses/dbcl/1.0/') + '.'
 
 %p
   If you wish to use the data for anything which isn't covered by the above license then please <a href="/feedback">get in touch</a>.
 
-%ul
-  %li= link_to 'Opening Times data', '/opening-times-data.csv.gz'
-
-%h2= anchor_for "API"
-
 %p
-  I am planning to make an Opening Times API available at some point in the future, if you are interested in using this, or helping to build it, then please <a href="/feedback">get in touch</a>.
+  The files are compressed, you can use
+  = link_to('7zip', 'http://www.7-zip.org/')
+  to decompress.
 
+%ul
+  - ["sql","csv","xml"].each do |ext|
+    - size = File.size("#{RAILS_ROOT}/public/export/facilities.#{ext}.gz") rescue "missing file"
+    %li= link_to(ext, "/export/facilities.#{ext}.gz") + " - #{number_to_human_size(size)}"
 
 %h2= anchor_for "Terms and conditions"
 

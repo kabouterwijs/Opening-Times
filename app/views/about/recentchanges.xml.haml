@@ -10,11 +10,8 @@
       %id= facility_url(f)
       %title{ :type => "text" }= h f.full_name
       %link{ :rel => "alternate", :href => facility_slug_url(f.slug) }
-      %author
-        %name= "User ID: #{h(f.user_id)}"
-        %uri= user_url(f.user_id)
       %updated= f.created_at.iso8601
-      %summary
-        = f.revision == 1 ? 'New entry' : 'Updated entry'
-        =h f.comment
+      - unless f.comment.blank?
+        %summary
+          =h f.comment
 

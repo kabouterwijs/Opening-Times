@@ -9,9 +9,13 @@ class CompareController < ApplicationController
     v2_id = params[:b].to_i
 
     # v1 = older version, v2 = newer version
-    v1_id, v2_id = v2_id, v1_id if v1_id > v2_id
+    v1_id, v2_id = v2_id, v1_id if v1_id > v2_id && v2_id > 0
 
     @v1 = FacilityRevision.find(v1_id)
+    if v2_id == 0
+      v2_id = FacilityRevision.find(:first, :conditions => ["facility_id = ? AND id < ?", @v1.facility_id, @v1.id], :order => 'id DESC')
+    end
+
     @v2 = FacilityRevision.find(v2_id)
 
     `mkdir -p #{COMPARE_TMP_DIR}`
@@ -30,3 +34,4 @@ class CompareController < ApplicationController
   end
 
 end
+

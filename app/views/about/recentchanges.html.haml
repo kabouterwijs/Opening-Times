@@ -1,29 +1,38 @@
 - content_for :head do
-  = auto_discovery_link_tag(:atom, { :format => :xml }, { :title => "Recent changes ATOM feed" } )
+  = auto_discovery_link_tag(:atom, { :format => :xml }, { :title => 'Recent changes atom feed' } )
 
-%h1= @page_title = "Recent changes"
+%h1= @page_title = 'Recent changes'
+
+%p
+  Last
+  = @revisions.size
+  revisions, sorted by most recent
 
 %table.reports
   %tr
     %th ID
     %th Name
-    %th{ :title => "The revision count for this business" } Rev
-    %th{ :title => "Size of the XML in bytes" } Size
-    %th User
+    %th{ :title => 'The revision count for this business' } Revision
+    %th Diff
+    %th{ :title => 'Size of the XML in bytes' } Size
     %th IP
     %th Updated
-    %th Comment
-
-  - for revision in @revisions
+  - @revisions.each do |revision|
     %tr
-      %td.num= link_to revision.facility_id, facility_path(revision.facility_id)
-      %td= link_to h(revision.facility.full_name), facility_slug_path(revision.slug)
-      %td.num= link_to revision.revision, facility_revision_path(revision.facility_id, revision.id)
+      %td.num
+        = link_to revision.facility_id, facility_path(revision.facility_id)
+      %td
+        = link_to h(revision.facility.full_name), facility_slug_path(revision.slug)
+        = '(new)' if 1 == revision.revision
+        %br
+          =h revision.comment
+      %td.num= link_to revision.revision, facility_revisions_path(revision.facility_id), :title => 'View the history for this facility'
+      %td= link_to 'diff', { :controller=>:compare, :a=>revision }, :title => 'Compare this version with the current version'
       %td.num= number_with_delimiter(revision.length)
-      %td.num= link_to revision.user_id, user_path(revision.user_id)
-      %td.num= link_to revision.ip, :controller => :reports, :action => :ip, :ip => revision.ip
-      %td= time_ago_in_words(revision.created_at) + " ago"
-      %td=h revision.comment
+      %td= link_to revision.ip, { :controller => :reports, :action => :ip, :ip => revision.ip }, :title => 'See other changes from this IP address'
+      %td
+        %span{ :title => revision.created_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(revision.created_at) + ' ago'
+
 
 %h2 See also
 

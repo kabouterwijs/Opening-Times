@@ -1,34 +1,12 @@
 %h1= @page_title = "About Opening Times"
 
-%p Opening Times provides opening times information for facilities such as shops, restaurants, libraries in the UK.
+%p Opening Times provides opening times information for UK shops and businesses.
 
-%h2 Source Code
-
-%p The source code and data are both available under an open license.
-
-%ul
-  %li
-    = link_to 'Opening Times source code', 'http://github.com/aubergene/Opening-Times'
-    (Ruby on Rails)
-
-
-%h2 Open Data
+%h2= anchor_for "API"
 
 %p
-  The Opening Times data are made available under the Open Database License:
-  = link_to('http://opendatacommons.org/licenses/odbl/1.0/','http://opendatacommons.org/licenses/odbl/1.0/') + '.'
-  Any rights in individual contents of the database are licensed under the Database Contents License:
-  = link_to('http://opendatacommons.org/licenses/dbcl/1.0/','http://opendatacommons.org/licenses/dbcl/1.0/') + '.'
+  I am planning to make an Opening Times API available at some point in the future, if you are interested in using this, or helping to build it, then please <a href="/feedback">get in touch</a>.
 
-%p
-  The files are compressed, you can use
-  = link_to('7zip', 'http://www.7-zip.org/')
-  to decompress.
-
-%ul
-  - ["sql","csv","xml"].each do |ext|
-    - size = File.size("#{RAILS_ROOT}/public/export/facilities.#{ext}.gz") rescue "missing file"
-    %li= link_to(ext, "/export/facilities.#{ext}.gz") + " - #{number_to_human_size(size)}"
 
 %h2 Thanks
 

@@ -22,7 +22,6 @@
         %th Name
         %th{ :title => "The revision count for this business" } Rev
         %th{ :title => "Size of the XML in bytes" } Size
-        %th User
         %th IP
         %th Updated
         %th Comment
@@ -33,9 +32,6 @@
           %td= link_to h(revision.facility.full_name), facility_slug_path(revision.slug)
           %td.num= link_to revision.revision, facility_revision_path(revision.facility_id, revision.id)
           %td.num= number_with_delimiter(revision.length)
-          %td.num
-            - if revision.user_id
-              = link_to revision.user_id, user_path(revision.user_id)
           %td.num= link_to_unless_current revision.ip, :ip => revision.ip
           %td= time_ago_in_words(revision.created_at) + " ago"
           %td=h revision.comment
