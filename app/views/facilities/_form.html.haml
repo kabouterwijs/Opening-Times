@@ -115,7 +115,7 @@
 
     %p= link_to 'Add a holiday opening', '#holidayopening', :class => "add_nested_item", :rel => "holidayopenings"
 
-  - if !current_user
+  - if use_captcha?
     %br
     = recaptcha_tags
 

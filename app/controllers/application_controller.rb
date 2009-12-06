@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_user_session, :current_user, :lockdown?
+  helper_method :current_user_session, :current_user, :lockdown?, :use_captcha?
 #  filter_parameter_logging :password, :password_confirmation
 
 #  protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -56,6 +56,10 @@ class ApplicationController < ActionController::Base
         render 'users/_reached_limit'
         return
       end
+    end
+
+    def use_captcha?
+      !(current_user && current_user.within_action_limit?)
     end
 
     def redirect_back_or_default(default)

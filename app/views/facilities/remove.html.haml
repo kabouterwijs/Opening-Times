@@ -11,6 +11,10 @@
     %small (please provide information to help people still looking for this business)
     %br
     = facility_form.text_area :comment, :rows => 2, :class => "fullWidth"
+
+    = recaptcha_tags # This is fake... it always appears but is only checked if show_captcha? is true...
+    %br
+
   = submit_tag "Remove", :disable_with => "Please wait...", :class=>'button cross'
 
   %br

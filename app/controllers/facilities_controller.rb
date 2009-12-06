@@ -1,7 +1,7 @@
 class FacilitiesController < ApplicationController
 #  before_filter :require_user, :only => [:index, :show, :sitemap]
   before_filter :check_lockdown, :except => [:index, :show, :sitemap]
-  before_filter :check_user, :except => [:index, :show, :sitemap]
+#  before_filter :check_user, :except => [:index, :show, :sitemap]
   before_filter :redirect_id_to_slug, :only => [:show]
 
   def index
@@ -45,7 +45,7 @@ class FacilitiesController < ApplicationController
     @facility = Facility.new(params[:facility])
     update_user_info
 
-    if (current_user || verify_recaptcha(:model => @facility)) && @facility.save
+    if (!use_captcha? || verify_recaptcha(:model => @facility)) && @facility.save
       flash[:success] = 'Business was successfully created.'
       redirect_to(@facility)
     else
@@ -59,7 +59,7 @@ class FacilitiesController < ApplicationController
     @facility = Facility.find(params[:id])
     update_user_info
 
-    if (current_user || verify_recaptcha(:model => @facility)) && @facility.update_attributes(params[:facility])
+    if (!use_captcha? || verify_recaptcha(:model => @facility)) && @facility.update_attributes(params[:facility])
       flash[:success] = 'Business was successfully updated.'
       redirect_to(@facility)
     else

@@ -17,6 +17,7 @@
 
   %body{ :onload => @onload, :unload => @onunload }
     #container
+
       %a#top{ :name => "top" }
       %a#skipToContent{:href=>'#content', :accesskey=>'s'}
         %img{:src=>'/images/invis.png',:width=>1,:height=>1, :alt=>'Skip to content'}
@@ -25,7 +26,6 @@
       = render 'partials/search_bar' unless @no_search_bar
 
       #main.container_16
-
         - unless flash.empty?
           .grid_16
             - flash.each do |name, msg|
