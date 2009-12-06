@@ -9,16 +9,15 @@ class AboutController < ApplicationController
       format.json { render :json => @holiday_sets.to_json( :include=>:holiday_events ) }
       format.html
     end
-
   end
 
   def recentchanges
     respond_to do |format|
       format.html {
-        @revisions = FacilityRevision.find(:all, :order => 'id DESC', :limit => 100)
+        @revisions = FacilityRevision.find(:all, :select => 'facility_id, length, slug, comment, revision, user_id, ip, created_at', :order => 'id DESC', :limit => 100)
       }
       format.xml {
-        @facilities = Facility.find(:all, :order => 'updated_at DESC', :limit => 100)
+        @facilities = Facility.find(:all, :select => 'id, name, location, slug, comment, created_at',  :order => 'updated_at DESC', :limit => 100)
       }
       format.rss { redirect_to :format => :xml }
     end
@@ -26,10 +25,10 @@ class AboutController < ApplicationController
 
   def recentlyremoved
     @removed = Facility.find(:all, :conditions => "retired_at IS NOT NULL", :order => 'id DESC', :limit => 100)
-    render :text => "Nothing has been removed" and return if @removed.empty?    
+    render :text => "Nothing has been removed" and return if @removed.empty?
     respond_to do |format|
       format.html
-      format.xml 
+      format.xml
       format.rss { redirect_to :format => :xml }
     end
   end
@@ -44,13 +43,13 @@ class AboutController < ApplicationController
 
   def statistics
     @status_manager = StatusManager.new
-  
+
     @total_facilities = Facility.count
     @total_active_facilities = Facility.count(:conditions => "retired_at IS NULL")
     @new_facilities_today = Facility.count(:id, :conditions => ["created_at > ?", Date.today])
     @total_open = @status_manager.open_size
     @percent_open = (100 * (@total_open.to_f / @total_active_facilities)).round
-    
+
 
     @total_users = User.count
     @new_users_today = User.count(:id, :conditions => ["created_at > ?", Date.today])
