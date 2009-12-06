@@ -43,6 +43,7 @@ task :after_update_code do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/recaptcha.rb #{release_path}/config/initializers/recaptcha.rb"
   run "ln -nfs #{deploy_to}/#{shared_dir}/data #{release_path}/data"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/export #{release_path}/public/export"
 end
 
 #after "deploy:symlink"

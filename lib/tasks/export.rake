@@ -3,8 +3,10 @@ require 'csv'
 
 namespace :export do
 
+  desc "Run all single file exports"
   task(:all => [:mysql, :csv, :xml])
 
+  desc "Export facility as one xml file (gzip)"
   task(:xml => [:environment]) do
     file_path = "#{RAILS_ROOT}/public/export/facilities.xml"
     progress = ProgressBar.new("Exporting XML", Facility.count)
@@ -25,6 +27,7 @@ namespace :export do
     progress.finish
   end
 
+  desc "Export facility as one xml file per facility (not included in :all)"
   task(:xml_files => [:environment]) do
     facilities = Facility.all
 
@@ -46,6 +49,7 @@ namespace :export do
     progress.finish
   end
 
+  desc "Export facility as one csv file (gzip)"
   task(:csv => :environment) do
     file_path = "#{RAILS_ROOT}/public/export/facilities.csv"
     progress = ProgressBar.new("Exporting CSV", Facility.count)
@@ -98,7 +102,7 @@ namespace :export do
     progress.finish
   end
 
-  desc "MySqlDump all tables except user"
+  desc "MySqlDump all tables except user (gzip)"
   task(:mysql => :environment) do
     file_path = "#{RAILS_ROOT}/public/export/facilities.sql"
     File.open(file_path,"w") do |f|

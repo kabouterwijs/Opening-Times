@@ -2,14 +2,13 @@
 config/database.yml
 config/initializers/recaptcha.rb
 coverage/*
-/data
+data
 db/backup/*
 db/*.sqlite3
 db/*.sql
 doc/*
-export/
 log/*.log
-public/data/**
+public/export/*
 public/stylesheets/*.css
 tmp/*
 tmp/**/*
