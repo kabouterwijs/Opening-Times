@@ -52,8 +52,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_user
-      require_user
-      unless current_user.within_action_limit?
+      if current_user && !current_user.within_action_limit?
         render 'users/_reached_limit'
         return
       end
