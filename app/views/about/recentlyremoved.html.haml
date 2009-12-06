@@ -22,8 +22,5 @@
         %span{ :title => facility.updated_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(facility.created_at) + ' ago'
       %td=h facility.comment
 
-%h2 See also
-
-%ul
-  %li= link_to 'Recent changes', recentchanges_path
+= render 'reports/report_list'
 

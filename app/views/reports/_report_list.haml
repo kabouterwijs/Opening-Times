@@ -1,12 +1,18 @@
-%h2 Reports
-%ul
-  %li= link_to_unless_current 'Midday', :action => :midday
-  %li= link_to_unless_current 'Midnight', :action => :midnight
-  %li= link_to_unless_current 'Long locations', :action => 'long_locations'
-  %li= link_to_unless_current 'Openings count', :action => 'openings_count'
-  %li= link_to_unless_current 'Openings length', :action => 'openings_length'
-  %li= link_to_unless_current 'Outside UK', :action => 'outside_uk'
-  %li= link_to_unless_current 'Changes by IP address', :action => 'ip', :ip => '0.0.0.0'
-  %li= link_to_unless_current 'External links', :action => 'externallinks'
+%h2 Feeds
 
+%ul
+  %li= link_to_unless_current 'Recent changes', recentchanges_path
+  %li= link_to_unless_current 'Recently removed', recentlyremoved_path
+
+%h2 Reports
+
+%ul
+  %li= link_to_unless_current 'Midday', :controller => :reports, :action => :midday
+  %li= link_to_unless_current 'Midnight', :controller => :reports, :action => :midnight
+  %li= link_to_unless_current 'Long locations', :controller => :reports, :action => 'long_locations'
+  %li= link_to_unless_current 'Openings count', :controller => :reports, :action => 'openings_count'
+  %li= link_to_unless_current 'Openings length', :controller => :reports, :action => 'openings_length'
+  %li= link_to_unless_current 'Outside UK', :controller => :reports, :action => 'outside_uk'
+  %li= link_to_unless_current 'Changes by IP address', :controller => :reports, :action => 'ip', :ip => '0.0.0.0'
+  %li= link_to_unless_current 'External links', :controller => :reports, :action => 'externallinks'
 
