@@ -31,9 +31,9 @@ class SearchController < ApplicationController
           search
         end
       end
-      format.kml do
-        kml
-      end
+      format.json { search }
+      format.xml { search }
+      format.kml { kml }
     end
   end
 

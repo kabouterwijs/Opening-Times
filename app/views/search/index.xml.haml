@@ -3,11 +3,15 @@
   - @facilities.each do |f|
     %result
       %id= f.id
-      %url= facility_url(f)
+      %permalink= h facility_url(f)
+      %slug= h facility_slug_url(f.slug)
       %status= @status_manager.status(f)
       %name=h f.name
       %location=h f.location
       %address=h f.address
       %postcode=h f.postcode
+      %phone=h f.phone
+      %url=h f.url
       %lat= f.lat
       %lng= f.lng
+
