@@ -26,6 +26,27 @@ module ApplicationHelper
     end
   end
 
+  def link_to_ip_or_user(options)
+    if options.is_a?(Hash)
+      user_id = options[:user_id]
+      ip = options[:ip]
+    else
+      user_id = options.user_id
+      ip = options.updated_from_ip
+    end
+
+
+    if user_id
+      if user_id > 0
+        link_to "User #{user_id}", user_path(user_id)
+      else
+        'imported'
+      end
+    else
+      link_to ip, :controller => :reports, :action => :ip, :ip => ip
+    end
+  end
+
   def az_links(collection, method, selected=[])
     selected = selected.to_a
     az = []
@@ -35,7 +56,7 @@ module ApplicationHelper
     ('A'..'Z').each do |letter|
       if selected.include?(letter)
         out += content_tag(:span, letter, :class => 'current')
-      elsif az.include?(letter)        
+      elsif az.include?(letter)
         out += content_tag(:a, letter, :href=> "##{letter.downcase}")
       else
         out += content_tag(:span, letter, :class => "disabled")

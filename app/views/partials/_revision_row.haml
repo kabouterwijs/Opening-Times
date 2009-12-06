@@ -9,7 +9,8 @@
   %td.num= link_to revision.revision, facility_revisions_path(revision.facility_id), :title => 'View the history for this facility'
   %td= link_to 'diff', { :controller=>:compare, :a=>revision }, :title => 'Compare this version with the current version'
   %td.num= number_with_delimiter(revision.length)
-  %td= link_to revision.ip, { :controller => :reports, :action => :ip, :ip => revision.ip }, :title => 'See other changes from this IP address'
+  %td
+    = link_to_ip_or_user(:user_id => revision.user_id, :ip => revision.ip)
   %td
     %span{ :title => revision.created_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(revision.created_at) + ' ago'
 
