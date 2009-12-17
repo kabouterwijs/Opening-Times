@@ -14,7 +14,7 @@ class AboutController < ApplicationController
   def recentchanges
     respond_to do |format|
       format.html {
-        @revisions = FacilityRevision.find(:all, :select => 'facility_id, length, slug, comment, revision, user_id, ip, created_at', :order => 'id DESC', :limit => 100)
+        @revisions = FacilityRevision.find(:all, :select => 'id, facility_id, length, slug, comment, revision, user_id, ip, created_at', :order => 'id DESC', :limit => 100)
       }
       format.xml {
         @facilities = Facility.find(:all, :select => 'id, name, location, slug, comment, created_at',  :order => 'updated_at DESC', :limit => 100)

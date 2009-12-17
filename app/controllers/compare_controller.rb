@@ -12,11 +12,15 @@ class CompareController < ApplicationController
     v1_id, v2_id = v2_id, v1_id if v1_id > v2_id && v2_id > 0
 
     @v1 = FacilityRevision.find(v1_id)
-    if v2_id == 0
-      v2_id = FacilityRevision.find(:first, :conditions => ["facility_id = ? AND id < ?", @v1.facility_id, @v1.id], :order => 'id DESC')
+    if @v1.revision == 1
+      render :text => "At revision 1, no diff available" and return
     end
-
-    @v2 = FacilityRevision.find(v2_id)
+    
+    if v2_id == 0
+      @v2 = FacilityRevision.find(:first, :conditions => ["facility_id = ? AND id < ?", @v1.facility_id, @v1.id], :order => 'id DESC')
+    else
+      @v2 = FacilityRevision.find(v2_id)
+    end
 
     `mkdir -p #{COMPARE_TMP_DIR}`
 
