@@ -65,7 +65,7 @@ class SearchController < ApplicationController
       @location = Geokit::LatLng.new(l_lat, l_lng)
     else
       logger.info "geocoding"
-      @location = MultiGeocoder.geocode(@location + ", UK")
+      @location = MultiGeocoder.geocode(@location) # + ", UK") # removing the UK, as it always returns a result otherwise
       render 'no_results' and return unless @location.success
     end
 
