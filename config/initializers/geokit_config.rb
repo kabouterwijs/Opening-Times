@@ -2,12 +2,12 @@ if defined? Geokit
 
 	# These defaults are used in Geokit::Mappable.distance_to and in acts_as_mappable
 	Geokit::default_units = :miles
-	Geokit::default_formula = :sphere
+	Geokit::default_formula = :flat
 
 	# This is the timeout value in seconds to be used for calls to the geocoder web
 	# services.  For no timeout at all, comment out the setting.  The timeout unit
 	# is in seconds.
-	Geokit::Geocoders::request_timeout = 5
+	Geokit::Geocoders::request_timeout = 2
 
 	# These settings are used if web service calls must be routed through a proxy.
 	# These setting can be nil if not needed, otherwise, addr and port must be
