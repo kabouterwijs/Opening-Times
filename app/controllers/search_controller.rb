@@ -40,6 +40,7 @@ class SearchController < ApplicationController
   private
 
   def kml
+    
     bounds = params["BBOX"].to_s.split(",")
     if 4 == bounds.size
       sw = GeoKit::LatLng.new(bounds[1],bounds[0])
@@ -47,7 +48,7 @@ class SearchController < ApplicationController
       bounds = GeoKit::Bounds.new(sw,ne)
       @facilities = Facility.find(:all, :bounds => bounds, :limit => 20)
     else
-      @facilities = []
+      render "network.kml"
     end
   end
 
