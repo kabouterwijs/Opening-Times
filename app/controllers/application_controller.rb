@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     end
 
     def use_captcha?
+      return false if RAILS_ENV == 'development'
       !(current_user && current_user.within_action_limit?)
     end
 
