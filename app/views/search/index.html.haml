@@ -26,6 +26,8 @@
           %td
             = link_to h(facility.full_name), facility_slug_path(facility.slug)
             .info
+              = h facility.address
+              %br
               - if @status_manager.on_holiday?(facility.id)
                 %strong
                   Bank holiday opening times, please check details
