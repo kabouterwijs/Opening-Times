@@ -156,17 +156,17 @@ describe "add_colon" do
   end
 end
 
-describe "extract_lat_lng" do
+describe "ParserUtils.extract_lat_lng" do
   it "should extract a latitude and longitude from a string" do
-    extract_lat_lng("51.1 0.4").should == ["51.1", "0.4"]
-    extract_lat_lng("51.1,0.4").should == ["51.1", "0.4"]
-    extract_lat_lng(" 51.1, 0.4 ").should == ["51.1", "0.4"]
-    extract_lat_lng(" 51.1 ,0.4 ").should == ["51.1", "0.4"]
-    extract_lat_lng(" 51.1 , 0.4 ").should == ["51.1", "0.4"]
-    extract_lat_lng("-51.1,0.4").should == ["-51.1", "0.4"]
-    extract_lat_lng("51.1,-0.4").should == ["51.1", "-0.4"]
-    extract_lat_lng("51").should == nil
-    extract_lat_lng("woo").should == nil
-    extract_lat_lng("East Dulwich").should == nil
+    ParserUtils.extract_lat_lng("51.1 0.4").should == ["51.1", "0.4"]
+    ParserUtils.extract_lat_lng("51.1,0.4").should == ["51.1", "0.4"]
+    ParserUtils.extract_lat_lng(" 51.1, 0.4 ").should == ["51.1", "0.4"]
+    ParserUtils.extract_lat_lng(" 51.1 ,0.4 ").should == ["51.1", "0.4"]
+    ParserUtils.extract_lat_lng(" 51.1 , 0.4 ").should == ["51.1", "0.4"]
+    ParserUtils.extract_lat_lng("-51.1,0.4").should == ["-51.1", "0.4"]
+    ParserUtils.extract_lat_lng("51.1,-0.4").should == ["51.1", "-0.4"]
+    ParserUtils.extract_lat_lng("51").should == nil
+    ParserUtils.extract_lat_lng("woo").should == nil
+    ParserUtils.extract_lat_lng("East Dulwich").should == nil
   end
 end

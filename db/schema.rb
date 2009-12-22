@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090917075255) do
+ActiveRecord::Schema.define(:version => 20091222144605) do
 
   create_table "facilities", :force => true do |t|
     t.integer  "holiday_set_id"
@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(:version => 20090917075255) do
   add_index "facility_revisions", ["facility_id"], :name => "index_facility_revisions_on_facility_id"
   add_index "facility_revisions", ["ip"], :name => "index_facility_revisions_on_ip"
   add_index "facility_revisions", ["user_id"], :name => "index_facility_revisions_on_user_id"
+
+  create_table "geocode_caches", :force => true do |t|
+    t.string   "location",   :limit => 100
+    t.decimal  "lat",                       :precision => 15, :scale => 10
+    t.decimal  "lng",                       :precision => 15, :scale => 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "geocode_caches", ["location"], :name => "index_geocode_caches_on_location", :unique => true
 
   create_table "group_memberships", :force => true do |t|
     t.integer  "group_id"
