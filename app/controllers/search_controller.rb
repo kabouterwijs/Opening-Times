@@ -28,7 +28,7 @@ class SearchController < ApplicationController
       ne = GeoKit::LatLng.new(bounds[3],bounds[2])
       bounds = GeoKit::Bounds.new(sw,ne)
       @status_manager = StatusManager.new      
-      @facilities = Facility.find(:all, :bounds => bounds, :limit => 30)
+      @facilities = Facility.find(:all, :bounds => bounds, :limit => 10)
       render "index.kml"
     else
       render "network.kml"
