@@ -29,9 +29,9 @@ class SearchController < ApplicationController
       sw = GeoKit::LatLng.new(bounds[1],bounds[0])
       ne = GeoKit::LatLng.new(bounds[3],bounds[2])
       bounds = GeoKit::Bounds.new(sw,ne)
-      @facilities = Facility.find(:all, :bounds => bounds, :limit => 10)
+      @facilities = Facility.find(:all, :bounds => bounds, :limit => 30)
     else
-      @facilities = Facility.find(:all, :limit => 10)
+      @facilities = Facility.find(:all, :order => 'id desc', :limit => 10)
     end
   end
     
