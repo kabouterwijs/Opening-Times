@@ -43,8 +43,10 @@
 
 %ul
   - ["sql","csv","xml"].each do |ext|
-    - size = File.size("#{RAILS_ROOT}/public/export/facilities.#{ext}.gz") rescue "missing file"
-    %li= link_to(ext, "/export/facilities.#{ext}.gz") + " - #{number_to_human_size(size)}"
+    - file = "#{RAILS_ROOT}/public/export/facilities.#{ext}.gz"
+    - size = File.size(file) rescue "missing file"
+    - mtime = File.mtime(file) rescue ""
+    %li= link_to(ext, "/export/facilities.#{ext}.gz") + " - #{number_to_human_size(size)} - updated #{time_ago_in_words(mtime)} ago"
 
 %h2= anchor_for "Terms and conditions"
 
