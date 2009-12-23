@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   RESULTS_LIMIT = 30
 
   def index
+    return kml if "kml" == params[:format]
     @location = GeocodeCache.geocode(params[:location])
     
     if @location
@@ -19,13 +20,6 @@ class SearchController < ApplicationController
       render 'no_results'
     end
   end
-    
-  private
-
-  def set_distance
-    @distance = params[:distance].to_i
-    @distance = DISTANCE_DEFAULT unless DISTANCES.include?(@distance)
-  end  
 
   def kml
     bounds = params["BBOX"].to_s.split(",")
@@ -33,11 +27,20 @@ class SearchController < ApplicationController
       sw = GeoKit::LatLng.new(bounds[1],bounds[0])
       ne = GeoKit::LatLng.new(bounds[3],bounds[2])
       bounds = GeoKit::Bounds.new(sw,ne)
-      @facilities = Facility.find(:all, :bounds => bounds, :limit => 20)
+      @status_manager = StatusManager.new      
+      @facilities = Facility.find(:all, :bounds => bounds, :limit => 30)
+      render "index.kml"
     else
       render "network.kml"
     end
   end
+    
+  private
+
+  def set_distance
+    @distance = params[:distance].to_i
+    @distance = DISTANCE_DEFAULT unless DISTANCES.include?(@distance)
+  end  
 
 end
 

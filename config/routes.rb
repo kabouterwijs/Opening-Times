@@ -13,8 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :groups, :collection => { :sitemap => :get }
   map.connect 'groups/:id/:page', :controller => :groups, :action => :show, :defaults => { :page => 1 }, :requirements => { :page => /\d*/ } # To allow page caching
 
-  map.search 'search.:format', :controller => 'search', :defaults => { :format => nil }
-#  map.fireeagle 'search/fireeagle', :controller => 'search', :action => 'fireeagle'
+  map.resources :search
+  # map. 'search/kml', :controller => 'search', :action => 'kml'
 
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"

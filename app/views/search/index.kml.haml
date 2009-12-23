@@ -3,9 +3,30 @@
   %Folder
     %name Test Placemarks
     %description These are just some of the different kinds of placemarks with which you can mark your favorite places
+    %Style{ :id=>"openPlacemark" }
+      %IconStyle
+        %Icon
+          %href http://opening-times.co.uk/images/markers/open/blank.png
+    %Style{ :id=>"closedPlacemark" }
+      %IconStyle
+        %Icon
+          %href http://opening-times.co.uk/images/markers/closed/blank.png
+    %Style{ :id=>"unsurePlacemark" }
+      %IconStyle
+        %Icon
+          %href http://opening-times.co.uk/images/markers/unsure/blank.png
+    %StyleMap{ :id=>"openingTimesStyleMap" }
+      %Pair
+        %key normal
+        %styleUrl #openPlacemark
+      %Pair
+        %key highlight
+        %styleUrl #highlightPlacemark
+    
     - @facilities.each do |f|
       %Placemark
         %name= h f.full_name
+        %styleUrl= "##{@status_manager.status(f).downcase}Placemark" #openingTimesStyleMap
         %description
           =h("<p><b>Opening times:</b><br />#{f.summary_normal_openings}</p>")
           =h("<p><b>Contact</b><br />#{f.full_address.gsub(',','<br />')}</p>")
