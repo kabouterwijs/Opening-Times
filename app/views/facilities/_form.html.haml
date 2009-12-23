@@ -5,12 +5,11 @@
 = error_messages_for :facility
 
 - form_for @facility do |facility_form|
-
-  - content_for :head do
-    = javascript_tag do
-      = "var normalopening='#{generate_template(facility_form, :normal_openings, :partial => "form_normal_opening")}'"
-      = "var holidayopening='#{generate_template(facility_form, :holiday_openings, :partial => "form_holiday_opening")}'"
-
+  %script{ :type => 'text/javascript' }
+    = '//<![CDATA['
+    = "var normalopening='#{generate_template(facility_form, :normal_openings, :partial => "form_normal_opening")}'"
+    = "var holidayopening='#{generate_template(facility_form, :holiday_openings, :partial => "form_holiday_opening")}'"
+    = '//]]>'
   %small
     * Mandatory field
 
