@@ -1,8 +1,7 @@
 !!! XML
 %kml{ :xmlns => "http://earth.google.com/kml/2.0" }
   %Folder
-    %name Test Placemarks
-    %description These are just some of the different kinds of placemarks with which you can mark your favorite places
+    %name Current status of businesses
     %Style{ :id=>"openPlacemark" }
       %IconStyle
         %Icon
@@ -15,14 +14,6 @@
       %IconStyle
         %Icon
           %href http://maps.google.com/mapfiles/kml/paddle/wht-blank.png
-    %StyleMap{ :id=>"openingTimesStyleMap" }
-      %Pair
-        %key normal
-        %styleUrl #openPlacemark
-      %Pair
-        %key highlight
-        %styleUrl #highlightPlacemark
-    
     - @facilities.each do |f|
       %Placemark
         %name= h f.full_name
