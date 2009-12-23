@@ -30,6 +30,8 @@ class SearchController < ApplicationController
       bounds = GeoKit::Bounds.new(sw,ne)
       @status_manager = StatusManager.new      
       @facilities = Facility.find(:all, :bounds => bounds, :limit => 10)
+    else
+      render "network.kml"
     end
   end
     
