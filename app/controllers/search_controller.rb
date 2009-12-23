@@ -31,7 +31,6 @@ class SearchController < ApplicationController
       @status_manager = StatusManager.new      
       @facilities = Facility.find(:all, :bounds => bounds, :limit => 10)
     end
-    response.headers["Content-Type"] = 'application/vnd.google-earth.kml+xml'
   end
     
   private
