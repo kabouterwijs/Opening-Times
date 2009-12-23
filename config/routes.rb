@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :groups, :collection => { :sitemap => :get }
   map.connect 'groups/:id/:page', :controller => :groups, :action => :show, :defaults => { :page => 1 }, :requirements => { :page => /\d*/ } # To allow page caching
 
-  map.resources :search
+  map.resources :search, :collection => { :network_link => :get }
   # map. 'search/kml', :controller => 'search', :action => 'kml'
 
   map.login "login", :controller => "user_sessions", :action => "new"

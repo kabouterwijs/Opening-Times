@@ -1,5 +1,5 @@
 !!! XML
-%kml{ :xmlns => "http://www.opengis.net/kml/2.2" }
+%kml{ :xmlns => "http://earth.google.com/kml/2.0" }
   %Folder
     %name Test Placemarks
     %description These are just some of the different kinds of placemarks with which you can mark your favorite places
@@ -26,13 +26,12 @@
     - @facilities.each do |f|
       %Placemark
         %name= h f.full_name
-        %styleUrl= "##{@status_manager.status(f).downcase}Placemark" #openingTimesStyleMap
+        %styleUrl= "##{@status_manager.status(f).downcase}Placemark"
         %description
           =h("<p><b>Opening times:</b><br />#{f.summary_normal_openings}</p>")
           =h("<p><b>Contact</b><br />#{f.full_address.gsub(',','<br />')}</p>")
           =h("<p><b>Phone:</b><br />#{f.phone}</p>") if f.phone
-          =h("<p><b>Website</b><br /><a href='#{f.url}'>website</a></p>") if f.url
-        %visibility 1
+          =h("<p><a href='#{f.url}'>website</a></p>") if f.url
         %Point
           %coordinates= "#{f.lng},#{f.lat}"
 

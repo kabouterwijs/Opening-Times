@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+    <NetworkLink>
+        <name>Opening Times (TESTING)</name>
+        <description>Shows whether businesses are currently open or closed</description>
+        <Url>
+          <href>http://<%= request.host_with_port %>/search.kml</href>
+            <viewRefreshMode>onStop</viewRefreshMode>
+            <viewRefreshTime>1</viewRefreshTime>
+        </Url>
+    </NetworkLink>
+</kml>
