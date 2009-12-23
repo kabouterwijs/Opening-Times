@@ -1,6 +1,18 @@
 !!! XML
 %kml{ :xmlns => "http://www.opengis.net/kml/2.2" }
   %Folder
+    %NetworkLink
+      %name Currently open businesses
+      %visibility 1
+      %open 1
+      %description This is a test feed, let me know if there are any problems
+      %refreshVisibility 1
+      %flyToView 0
+      %Link
+        %href= "http://" + request.host_with_port + "/search.kml"
+        %refreshInterval 1
+        %viewRefreshMode onStop
+        %viewRefreshTime 1  
     %name Test Placemarks
     %description These are just some of the different kinds of placemarks with which you can mark your favorite places
     %Style{ :id=>"openPlacemark" }
