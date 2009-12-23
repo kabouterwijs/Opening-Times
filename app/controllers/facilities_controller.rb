@@ -47,8 +47,10 @@ class FacilitiesController < ApplicationController
 
     if (!use_captcha? || verify_recaptcha(:model => @facility)) && @facility.save
       flash[:success] = 'Business was successfully created.'
+      flash[:analytics] = url_for(@facility) + '/created'
       redirect_to(@facility)
     else
+      flash[:analytics] = new_facility_path + '/validation'
       build_spare_openings
       render "new"
     end
@@ -61,8 +63,10 @@ class FacilitiesController < ApplicationController
 
     if (!use_captcha? || verify_recaptcha(:model => @facility)) && @facility.update_attributes(params[:facility])
       flash[:success] = 'Business was successfully updated.'
+      flash[:analytics] = url_for(@facility) + '/updated'
       redirect_to(@facility)
     else
+      flash[:analytics] = url_for(@facility) + '/validation'
       build_spare_openings
       render :action => "edit"
     end

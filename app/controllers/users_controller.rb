@@ -26,8 +26,11 @@ class UsersController < ApplicationController
 
     if verify_recaptcha(:model => @user) && @user.save
       flash[:success] = 'Registration successful'
+      flash[:analytics] = url_for(@user) + '/created'
+      cookies[:user_id] = @user.id
       redirect_to welcome_path
     else
+      flash[:analytics] = new_user_path + '/validation'
       render :action => "new"
     end
   end
@@ -37,8 +40,10 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(params[:user])
       flash[:success] = 'User information successfully updated'
+      flash[:analytics] = url_for(@user) + '/created'
       redirect_back_or_default(guidelines_url)
     else
+      flash[:analytics] = url_for(@user) + '/updated'
       render :action => "edit"
     end
   end

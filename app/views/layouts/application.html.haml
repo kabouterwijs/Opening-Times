@@ -26,9 +26,9 @@
       = render 'partials/search_bar' unless @no_search_bar
 
       #main.container_16
-        - unless flash.empty?
+        - unless flash.except(:analytics).empty?
           .grid_16
-            - flash.each do |name, msg|
+            - flash.except(:analytics).each do |name, msg|
               .flash
                 = content_tag :div, msg, :class => "flash-#{name}"
 
@@ -40,5 +40,5 @@
         .clearfix
 
       = render :partial => 'partials/footer'
-    = render :partial => 'partials/analytics' if RAILS_ENV == 'production'
+    = render :partial => 'partials/analytics' #if RAILS_ENV == 'production'
 
