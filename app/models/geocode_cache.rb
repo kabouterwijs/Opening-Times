@@ -35,7 +35,7 @@ class GeocodeCache < ActiveRecord::Base
     location = MultiGeocoder.geocode(q, :bias => "UK")
   
     if location.success
-      GeocodeCache.create(:location => q, :lat => location.lat, :lng => location.lng)
+      GeocodeCache.create(:location => q, :lat => location.lat, :lng => location.lng) rescue logger.warn("GeocodeCache clash")
       return location
     else
       false
