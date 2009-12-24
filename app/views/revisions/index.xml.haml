@@ -14,6 +14,6 @@
       %link{ :rel => "alternate", :href => facility_revision_url(@facility, r) }
       %author
         %name= r.updated_by
-        %uri= link_to_ip_or_user(r.updated_by)
+        %uri= link_to_updated_by(r)
       %updated= r.created_at.iso8601
       %summary=h r.comment
