@@ -15,8 +15,8 @@
     %th{ :title => 'The revision count for this business' } Revision
     %th Diff
     %th{ :title => 'Size of the XML in bytes' } Size
-    %th User/IP
-    %th Updated
+    %th Updated&nbsp;by
+    %th Updated&nbsp;at
   = render :partial => 'partials/revision_row', :collection => @revisions, :as => :revision
 
 = render 'reports/report_list'

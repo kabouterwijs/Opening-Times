@@ -10,10 +10,10 @@
   - @revisions.each do |r|
     %entry
       %id= facility_url(@facility)
-      %title{ :type => "text" }= "User: #{r.user_id}, length: #{r.length}"
+      %title{ :type => "text" }= "#{r.slug}, length: #{r.length}"
       %link{ :rel => "alternate", :href => facility_revision_url(@facility, r) }
       %author
-        %name= "User ID: #{h(r.user_id)}"
-        %uri= user_url(r.user_id)
+        %name= r.updated_by
+        %uri= link_to_ip_or_user(r.updated_by)
       %updated= r.created_at.iso8601
       %summary=h r.comment

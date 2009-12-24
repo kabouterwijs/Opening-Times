@@ -12,6 +12,10 @@ class FacilityRevision < ActiveRecord::Base
     self.ip         = facility.updated_from_ip
   end
 
+  def updated_by
+    user_id || ip
+  end
+
   def to_xml
     xml
   end

@@ -117,6 +117,10 @@ class Facility < ActiveRecord::Base
     "#{address}, #{postcode}"
   end
 
+  def updated_by
+    user_id || updated_from_ip
+  end
+
   def group_set_summary(group_set)
     tmp = group_set.first.week_day
     tmp += (group_set.size == 1 ? ': ' : "-#{group_set.last.week_day}: ")

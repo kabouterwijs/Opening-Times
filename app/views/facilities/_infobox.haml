@@ -4,16 +4,11 @@
       ID:
       = @facility.id
     %li
-      Lat:
-      = @facility.lat
-      Lng:
-      = @facility.lng
-    %li
       Updated:
       = @facility.updated_at.strftime("%I:%M%p, %d %b %Y")
     %li
       Updated by:
-      = link_to_ip_or_user(@facility)
+      = link_to_updated_by(@facility)
     %li
       Revision:
       = link_to @facility.revision, facility_revisions_path(@facility)

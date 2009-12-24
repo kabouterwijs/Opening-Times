@@ -26,24 +26,14 @@ module ApplicationHelper
     end
   end
 
-  def link_to_ip_or_user(options)
-    if options.is_a?(Hash)
-      user_id = options[:user_id]
-      ip = options[:ip]
+  def link_to_updated_by(x)      
+    x = x.updated_by  
+    return 'imported' if x == 0
+    
+    if x.is_a?(Fixnum)
+      link_to "User #{x}", user_path(x)
     else
-      user_id = options.user_id
-      ip = options.updated_from_ip
-    end
-
-
-    if user_id
-      if user_id > 0
-        link_to "User #{user_id}", user_path(user_id)
-      else
-        'imported'
-      end
-    else
-      link_to ip, :controller => :reports, :action => :ip, :ip => ip
+      link_to x, :controller => :reports, :action => :ip, :ip => x
     end
   end
 

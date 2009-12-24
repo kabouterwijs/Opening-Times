@@ -12,7 +12,7 @@
       = link_to 'diff', { :controller=>:compare, :a=>revision }, :title => 'Compare this version with the current version'
   %td.num= number_with_delimiter(revision.length)
   %td
-    = link_to_ip_or_user(:user_id => revision.user_id, :ip => revision.ip)
+    = link_to_updated_by(revision)
   %td
     %span{ :title => revision.created_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(revision.created_at) + ' ago'
 

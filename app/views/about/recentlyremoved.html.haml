@@ -8,8 +8,8 @@
     %th ID
     %th Name
     %th Revision
-    %th IP
-    %th Updated
+    %th Updated&nbsp;by
+    %th Updated&nbsp;at
     %th Comment
 
   - for facility in @removed
@@ -17,7 +17,7 @@
       %td.num= link_to facility.id, facility_path(facility.id)
       %td= link_to h(facility.full_name), facility_slug_path(facility.slug)
       %td.num= link_to facility.revision, facility_revisions_path(facility), :title => 'View the history for this facility'
-      %td= link_to facility.updated_from_ip, { :controller => :reports, :action => :ip, :ip => facility.updated_from_ip }, :title => 'See other changes from this IP address'
+      %td= link_to_updated_by(facility)
       %td
         %span{ :title => facility.updated_at.strftime("%I:%M - %d %b %Y") }= time_ago_in_words(facility.created_at) + ' ago'
       %td=h facility.comment
