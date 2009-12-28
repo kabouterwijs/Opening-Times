@@ -1,5 +1,5 @@
 require 'progressbar'
-require 'csv'
+require 'fastercsv'
 
 namespace :export do
 
