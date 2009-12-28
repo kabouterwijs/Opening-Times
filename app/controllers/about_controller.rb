@@ -1,6 +1,6 @@
 class AboutController < ApplicationController
 
-  caches_page :homepage, :bankholidays, :sitemap #
+  caches_page :homepage, :sitemap #
 
   def bankholidays
     @holiday_sets = HolidaySet.all
