@@ -120,8 +120,8 @@
 
   = facility_form.hidden_field :retired?
 
-  - button_text = 'Save' #@facility.new_record? ? 'Create' : 'Update'
-  %p= submit_tag button_text, :class=>'button disk', :disable_with => "Please wait..."
+  - button_text = @facility.new_record? ? 'Create' : 'Update'
+  %p= submit_tag button_text, :class=>'button disk', :disable_with => "Please wait...", :onClick => "pageTracker._trackEvent('Facilities', '#{button_text}');"
 
   - unless @facility.new_record?
     %p
