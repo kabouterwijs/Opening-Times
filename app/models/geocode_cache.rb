@@ -33,8 +33,8 @@ class GeocodeCache < ActiveRecord::Base
 
   def self.geocode_query(q)
     location = MultiGeocoder.geocode(q, :bias => "UK")
-  
-    if location.success
+    
+    if location.success && %w(UK GB IM JE GG IE).include?(location.country_code)
       GeocodeCache.create(:location => q, :lat => location.lat, :lng => location.lng) rescue logger.warn("GeocodeCache clash")
       return location
     else
