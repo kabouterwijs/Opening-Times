@@ -1,4 +1,4 @@
-set :application, "opening-times.org.uk"
+set :application, "opening-times.co.uk"
 
 # If you have previously been relying upon the code to start, stop
 # and restart your mongrel application, or if you rely on the database
