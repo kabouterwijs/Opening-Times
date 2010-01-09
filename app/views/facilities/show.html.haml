@@ -15,22 +15,6 @@
     - unless @facility.description.blank?
       = simple_format(@facility.description)
 
-    %h2 Christmas &amp New Year opening times  
-
-    %p
-      - if !(@facility.url.blank? || @facility.phone.blank?)
-        Please phone 
-        = @facility.phone
-        or visit
-        = link_to 'the official website', @facility.url
-      - elsif !@facility.url.blank?
-        Please visit
-        = link_to 'the official website', @facility.url
-      - elsif !@facility.phone.blank?
-        Please phone
-        = @facility.phone
-
-
     %p{ :class => @status.downcase }
       =h @facility.name
       is currently
