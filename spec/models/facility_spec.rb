@@ -63,16 +63,16 @@ describe Facility do
   end
   
   it "should save a list of groups" do
-    list = ["one","two","three"]
+    list = ["apple","berry","cola"]
     @facility.groups_list = list.join(",")
     @facility.save
     list.each do |item|
-      @facility.groups_list.should =~ /#{item}/
+      @facility.groups_list.should == list.join(", ")
     end
   end
 
   it "should update the list of groups" do
-    list = ["one","two","three"]
+    list = ["apple","berry","cola"]
     @facility.groups_list = list.join(",")
     @facility.save!
     list << "four"
@@ -80,12 +80,12 @@ describe Facility do
     @facility.save!
     @facility.reload
     list.each do |item|
-      @facility.groups_list.should =~ /#{item}/
+      @facility.groups_list.should == list.join(", ")
     end
   end
 
   it "should preserve the group list when there is a validation problem" do
-    list = ["one","two","three"]
+    list = ["apple","berry","cola"]
     @facility.groups_list = list.join(",")
     @facility.postcode = ""
     @facility.valid?.should be_false
@@ -93,7 +93,7 @@ describe Facility do
     @facility.save!
     @facility.reload
     list.each do |item|
-      @facility.groups_list.should =~ /#{item}/
+      @facility.groups_list.should == list.join(", ")
     end
   end
 

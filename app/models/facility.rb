@@ -231,18 +231,18 @@ class Facility < ActiveRecord::Base
   end
 
   def groups_list
-    groups.map(&:name).join(", ")
+    groups.map(&:name).sort.join(", ")
   end
 
   def groups_list=(s)
     # see bug report - http://github.com/aubergene/Opening-Times/issues#issue/5
-    self.group_memberships.each { |gm| gm.mark_for_destruction }
+    self.group_memberships.each { |gm| gm.destroy }
 
     groups = s.split(",")
     groups.reject!(&:blank?)
     groups.map!(&:strip)
     groups.uniq!
-    groups = groups.take(MAX_GROUP_MEMBERSHIPS)
+    groups = groups[0,MAX_GROUP_MEMBERSHIPS]
     groups.each do |group|
       group = Group.find_or_create_by_name(group)
       self.group_memberships.build(:group => group)
