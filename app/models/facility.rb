@@ -3,7 +3,7 @@ class Facility < ActiveRecord::Base
 
   include ParserUtils
 
-  MAX_GROUP_MEMBERSHIPS = 6 # Number of groups a Facility can be a member of
+  MAX_GROUP_MEMBERSHIPS = 20 # Number of groups a Facility can be a member of
 
   has_many :normal_openings,  :dependent => :delete_all
   has_many :holiday_openings,  :dependent => :delete_all
@@ -236,7 +236,7 @@ class Facility < ActiveRecord::Base
 
   def groups_list=(s)
     # see bug report - http://github.com/aubergene/Opening-Times/issues#issue/5
-    self.group_memberships.delete_all
+    self.group_memberships.each { |gm| gm.mark_for_destruction }
 
     groups = s.split(",")
     groups.reject!(&:blank?)

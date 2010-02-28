@@ -61,6 +61,43 @@ describe Facility do
     @facility.lng = 181.0
     @facility.should_not be_valid
   end
+  
+  it "should save a list of groups" do
+    list = ["one","two","three"]
+    @facility.groups_list = list.join(",")
+    @facility.save
+    list.each do |item|
+      @facility.groups_list.should =~ /#{item}/
+    end
+  end
+
+  it "should update the list of groups" do
+    list = ["one","two","three"]
+    @facility.groups_list = list.join(",")
+    @facility.save!
+    list << "four"
+    @facility.groups_list = list.join(",")
+    @facility.save!
+    @facility.reload
+    list.each do |item|
+      @facility.groups_list.should =~ /#{item}/
+    end
+  end
+
+  it "should preserve the group list when there is a validation problem" do
+    list = ["one","two","three"]
+    @facility.groups_list = list.join(",")
+    @facility.postcode = ""
+    @facility.valid?.should be_false
+    @facility.postcode = "SE15 5TL"
+    @facility.save!
+    @facility.reload
+    list.each do |item|
+      @facility.groups_list.should =~ /#{item}/
+    end
+  end
+
+
 
   it "should produce a summary of its openings" do
     f = Factory.build(:facility)
