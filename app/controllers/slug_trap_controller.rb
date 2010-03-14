@@ -19,7 +19,7 @@ class SlugTrapController < ApplicationController
         render 'facilities/show'
       end
       format.xml  { render :xml => @facility }
-      format.json  { render :json => @facility }
+      format.json  { render :text => @facility.to_json(:include => { :normal_openings => { :only => [], :methods => [:opens_at, :closes_at, :week_day] } }   ) }
     end
   end
 
