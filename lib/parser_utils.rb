@@ -47,17 +47,17 @@ module ParserUtils
   end
 
   def extract_phone(text)
-    p_nums = text.scan(/(?:\+44)?[ 0-9\(\)\-]{10,16}/) # UK phone numbers min/max length (incluing bracket, etc.)
+    p_nums = text.scan(/(?:\+44)?[ 0-9\(\)\-]{10,16}/) # UK phone numbers min/max length (including bracket, etc.)
     p_nums.map { |x| x.gsub!(/\D/,'') }
     p_nums.reject! { |x| x.nil? || x.empty? || x.length < 10 }
     p_nums.each do |num|
       num.sub!(/^44/,'')
       num = case num
-        when /^02/ # London (020), Southhampton & Portsmouth (023), Coventry (024), Northern Ireland (028), Cardiff (029)
+        when /^02[03489]/, /^05[56]/, /^070/ # London (020), Southhampton & Portsmouth (023), Coventry (024), Northern Ireland (028), Cardiff (029)
           num.insert(3,') ').insert(9,' ')
-        when /^08/, /^011/, /^01[2-6,9]1/ #
-          num.insert(4,') ')
-        when /^01697[3,4,7]/ # Brampton *still* has four digit numbers, go Brampton!
+        when /^011[3-9]/, /^01[2-69]1/, /^03/, /^0500/, /^8(0[08]|4[2-5]|7[0-3])/, /^09[018]/ #
+          num.insert(4,') ').insert(9,' ')
+        when /^01(3873|5(242|39[456])|697[347]|768[347]|9467)/ # Twelve areas still use 01xxxx area codes.
           num.insert(6,') ')
         else
           num.insert(5,') ')
