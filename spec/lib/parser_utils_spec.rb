@@ -76,9 +76,9 @@ describe "extract_phone" do
     one.should == "(020) 7500 3400"
     two.should == "(020) 7500 3401"
 
-    one, two = extract_phone("Tel: 01892 750 340 or fax: (0845) 60 60 60")
+    one, two = extract_phone("Tel: 01892 750 340 or fax: (0845) 760 60 60")
     one.should == "(01892) 750340"
-    two.should == "(0845) 606060"
+    two.should == "(0845) 760 6060"
   end
 
   it "should return number in the correct format" do
@@ -86,9 +86,9 @@ describe "extract_phone" do
     one.should == "(020) 7500 3400"
     two.should == "(020) 7500 3401"
 
-    one, two = extract_phone("Tel: 01892 750340 or fax: 0845 60 60 60")
+    one, two = extract_phone("Tel: 01892 750340 or fax: 0845 760 60 60")
     one.should == "(01892) 750340"
-    two.should == "(0845) 606060"
+    two.should == "(0845) 760 6060"
 
     one, two = extract_phone("Tel: 020-7500-3400 or fax: (0207) 500 3401")
     one.should == "(020) 7500 3400"
@@ -101,28 +101,38 @@ describe "extract_phone" do
     extract_phone("02037327732").should == "(020) 3732 7732" # 020 London
 
     #TODO get some actual numbers for these areas
-    extract_phone("02377327732").should == "(023) 7732 7732" # 023	Southampton and Portsmouth
-    extract_phone("02477327732").should == "(024) 7732 7732" # 024	Coventry
-    extract_phone("02877327732").should == "(028) 7732 7732" # 028 Northern Ireland
-    extract_phone("02977327732").should == "(029) 7732 7732" # 029 Cardiff
+    extract_phone("02380327732").should == "(023) 8032 7732" # 023 Southampton and Portsmouth
+    extract_phone("02476327732").should == "(024) 7632 7732" # 024 Coventry
+    extract_phone("02890327732").should == "(028) 9032 7732" # 028 Northern Ireland
+    extract_phone("02920327732").should == "(029) 2032 7732" # 029 Cardiff
 
-    extract_phone("0113773277").should == "(0113) 773277" # 0113 Leeds
-    extract_phone("0114773277").should == "(0114) 773277" # 0114 Sheffield
-    extract_phone("0115773277").should == "(0115) 773277" # 0115 Nottingham
-    extract_phone("0116773277").should == "(0116) 773277" # 0116 Leicester
-    extract_phone("0117773277").should == "(0117) 773277" # 0117 Bristol
-    extract_phone("0118773277").should == "(0118) 773277" # 0118 Reading
+    extract_phone("01132773277").should == "(0113) 277 3277" # 0113 Leeds
+    extract_phone("01143773277").should == "(0114) 277 3277" # 0114 Sheffield
+    extract_phone("01158773277").should == "(0115) 977 3277" # 0115 Nottingham
+    extract_phone("01162773277").should == "(0116) 277 3277" # 0116 Leicester
+    extract_phone("01179773277").should == "(0117) 977 3277" # 0117 Bristol
+    extract_phone("01189773277").should == "(0118) 977 3277" # 0118 Reading
 
-    extract_phone("0121773277").should == "(0121) 773277" # 0121 Birmingham
-    extract_phone("0131773277").should == "(0131) 773277" # 0131 Edinburgh
-    extract_phone("0141773277").should == "(0141) 773277" # 0141 Glasgow
-    extract_phone("0151773277").should == "(0151) 773277" # 0151 Liverpool
-    extract_phone("0161773277").should == "(0161) 773277" # 0161 Manchester
-    extract_phone("0191773277").should == "(0191) 773277" # 0191 Tyne and Wear and Durham
+    extract_phone("01212773277").should == "(0121) 277 3277" # 0121 Birmingham
+    extract_phone("01312773277").should == "(0131) 277 3277" # 0131 Edinburgh
+    extract_phone("01412773277").should == "(0141) 277 3277" # 0141 Glasgow
+    extract_phone("01512773277").should == "(0151) 277 3277" # 0151 Liverpool
+    extract_phone("01612773277").should == "(0161) 277 3277" # 0161 Manchester
+    extract_phone("01912773277").should == "(0191) 277 3277" # 0191 Tyne and Wear and Durham
 
-    extract_phone("0169733277").should == "(016973) 3277" # 016973 Wigton
-    extract_phone("0169743277").should == "(016974) 3277" # 016974 Raughton Head
-    extract_phone("0169773277").should == "(016977) 3277" # 016977 Hallbankgate
+    extract_phone("013873 32777").should == "(013873) 32777" # 013873 Langholm
+    extract_phone("015242 32777").should == "(015242) 32777" # 015242 Hornby
+    extract_phone("015394 32777").should == "(015394) 32777" # 015394 Hawkshead
+    extract_phone("015395 32777").should == "(015395) 32777" # 015395 Grange-over-Sands
+    extract_phone("015396 32777").should == "(015396) 32777" # 015396 Sedbergh
+    extract_phone("016973 32777").should == "(016973) 32777" # 016973 Wigton
+    extract_phone("016974 32777").should == "(016974) 32777" # 016974 Raughton Head
+    extract_phone("016977 2333").should  == "(016977) 2333"  # 016977 Brampton (4-fig.)
+    extract_phone("016977 45777").should == "(016977) 45777" # 016977 Brampton
+    extract_phone("017683 32777").should == "(017683) 32777" # 017683 Appleby-in-Westmoreland
+    extract_phone("017684 32777").should == "(017684) 32777" # 017684 Pooley Bridge
+    extract_phone("017687 32777").should == "(017687) 32777" # 017687 Keswick
+    extract_phone("019467 32777").should == "(019467) 32777" # 019467 Gosforth
   end
 
   it "should return the phone, from test case ADSA" do

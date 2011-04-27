@@ -14,7 +14,7 @@ namespace :export do
     File.open(file_path,"w") do |file|
       xml = Builder::XmlMarkup.new(:indent => 2, :target => file)
       xml.instruct!
-      xml.comment! "The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
+      xml.comment! "The Opening Times http://opening-times.co.uk/ data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
 
       xml.facilities do
         Facility.find(:all, :include => [ :normal_openings, :holiday_openings, :groups]).each do |facility|
@@ -55,7 +55,7 @@ namespace :export do
     progress = ProgressBar.new("Exporting CSV", Facility.count)
 
     CSV.open(file_path,"w") do |csv|
-      csv << ["The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "]
+      csv << ["The Opening Times http://opening-times.co.uk/ data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "]
 
       csv << ["id","name","location","address","postcode","latitude","longitude","phone","url","tags","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Bank Holidays"]
       Facility.find(:all, :include => [ :normal_openings, :holiday_openings, :groups]).each do |facility|
@@ -106,7 +106,7 @@ namespace :export do
   task(:mysql => :environment) do
     file_path = "#{RAILS_ROOT}/public/export/facilities.sql"
     File.open(file_path,"w") do |f|
-      f << "-- The Opening Times http://opening-times.co.uk data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
+      f << "-- The Opening Times http://opening-times.co.uk/ data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual contents of the database are licensed under the Database Contents License: http://opendatacommons.org/licenses/dbcl/1.0/. "
     end
 
     database, user, password = retrieve_db_info
