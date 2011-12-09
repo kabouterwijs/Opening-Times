@@ -100,7 +100,6 @@ describe "extract_phone" do
     extract_phone("02087327732").should == "(020) 8732 7732" # 020 London
     extract_phone("02037327732").should == "(020) 3732 7732" # 020 London
 
-    #TODO get some actual numbers for these areas
     extract_phone("02380327732").should == "(023) 8032 7732" # 023 Southampton and Portsmouth
     extract_phone("02476327732").should == "(024) 7632 7732" # 024 Coventry
     extract_phone("02890327732").should == "(028) 9032 7732" # 028 Northern Ireland
@@ -121,7 +120,7 @@ describe "extract_phone" do
     extract_phone("01912773277").should == "(0191) 277 3277" # 0191 Tyne and Wear and Durham
 
     extract_phone("013873 32777").should == "(013873) 32777" # 013873 Langholm
-    extract_phone("015242 32777").should == "(015242) 32777" # 015242 Hornby
+    extract_phone("015242 32777").should == "(015242) 32777" # 015242 Hornby-with-Farleton
     extract_phone("015394 32777").should == "(015394) 32777" # 015394 Hawkshead
     extract_phone("015395 32777").should == "(015395) 32777" # 015395 Grange-over-Sands
     extract_phone("015396 32777").should == "(015396) 32777" # 015396 Sedbergh
@@ -129,7 +128,7 @@ describe "extract_phone" do
     extract_phone("016974 32777").should == "(016974) 32777" # 016974 Raughton Head
     extract_phone("016977 2333").should  == "(016977) 2333"  # 016977 Brampton (4-fig.)
     extract_phone("016977 45777").should == "(016977) 45777" # 016977 Brampton
-    extract_phone("017683 32777").should == "(017683) 32777" # 017683 Appleby-in-Westmoreland
+    extract_phone("017683 32777").should == "(017683) 32777" # 017683 Appleby-in-Westmorland
     extract_phone("017684 32777").should == "(017684) 32777" # 017684 Pooley Bridge
     extract_phone("017687 32777").should == "(017687) 32777" # 017687 Keswick
     extract_phone("019467 32777").should == "(019467) 32777" # 019467 Gosforth
